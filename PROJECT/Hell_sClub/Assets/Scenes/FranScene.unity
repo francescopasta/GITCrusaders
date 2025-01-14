@@ -5582,7 +5582,7 @@ PrefabInstance:
     - target: {fileID: 2157949336896233299, guid: b2c04d04218dc964e933b9dec6ce69e6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.931
       objectReference: {fileID: 0}
     - target: {fileID: 2157949336896233299, guid: b2c04d04218dc964e933b9dec6ce69e6,
         type: 3}
@@ -6278,7 +6278,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
