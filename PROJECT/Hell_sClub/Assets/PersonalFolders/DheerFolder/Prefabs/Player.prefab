@@ -94,7 +94,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732771572297175989}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7d1c72e3f3f069f43a5dcc53fa5879fb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -118,8 +118,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732771572297175989}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 1.3
+  m_Drag: 0.66
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -157,9 +157,12 @@ MonoBehaviour:
   MoveMultiplier: 10
   RotateSpeed: 15
   VelocityTracker: {x: 0, y: 0, z: 0}
-  JumpHeight: 5
-  JumpPower: 5
+  JumpPower: 9
+  Grounded: 0
+  GroundCheckDistance: 0
+  BufferCheckDistance: 0.1
   PlayerHealth: 100
+  MainCam: {fileID: 0}
 --- !u!1 &8635693000829644221
 GameObject:
   m_ObjectHideFlags: 0
