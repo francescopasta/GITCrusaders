@@ -103,6 +103,23 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
     }
 
+    public float CheckNearestGround() 
+    {
+        RaycastHit hit;
+        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit))
+        {
+            // The ray hit something, and the position of the hit is stored in hit.point
+            Vector3 groundPosition = hit.point;
+            Debug.Log("Ground position: " + groundPosition);
+            return groundPosition.y;
+        }
+        else
+        {
+            return 0f;
+        }
+    }
     //public void OnTriggerEnter(Collider other)
     //{
     //    if (other.CompareTag("Ground"))
