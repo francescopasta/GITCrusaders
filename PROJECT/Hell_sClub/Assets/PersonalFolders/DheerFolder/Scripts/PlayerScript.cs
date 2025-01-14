@@ -35,7 +35,6 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovementandRotation();
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Speed = SprintSpeed;
@@ -46,7 +45,11 @@ public class PlayerScript : MonoBehaviour
             Speed = WalkSpeed; 
         }
     }
+    private void FixedUpdate()
+    {
+        MovementandRotation();
 
+    }
     public void MovementandRotation()
     {
         HorizontalInput = Input.GetAxis("Horizontal");
