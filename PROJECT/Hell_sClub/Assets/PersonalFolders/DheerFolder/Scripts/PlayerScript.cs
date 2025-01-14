@@ -22,14 +22,17 @@ public class PlayerScript : MonoBehaviour
     public float JumpPower=5f;
 
     public float PlayerHealth=100f;
-    
-    
+
+    [Header("Camera and other References")]
+    public Camera MainCam;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Speed = WalkSpeed;
         PlayerRigibody = GetComponent<Rigidbody>();
         VelocityTracker = PlayerRigibody.velocity;
+        MainCam = Camera.main;
     }
 
     // Update is called once per frame
@@ -52,12 +55,22 @@ public class PlayerScript : MonoBehaviour
     }
     public void MovementandRotation()
     {
+        Vector3 Right = Vector3.Cross(Vector3.up, MainCam.transform.forward);
+        Vector3 Forward = Vector3.Cross(Right, Vector3.up);
+
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
 
-        Vector3 MovementInput = new Vector3(HorizontalInput, 0f, VerticalInput);
+        Vector3 MovementInput = Vector3.zero;
+
+        Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
+        Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
+        //MovementInput = new Vector3(HorizontalInput, 0f, VerticalInput);
+
+        MovementInput += ForwardVector + RightVector ;
         
-        PlayerRigibody.velocity = (MovementInput * Speed * Time.deltaTime * MoveMultiplier) + new Vector3(0f,PlayerRigibody.velocity.y,0f);
+        PlayerRigibody.velocity = MovementInput + new Vector3(0f, PlayerRigibody.velocity.y, 0f);
+        
         if(MovementInput != Vector3.zero)
         {
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
