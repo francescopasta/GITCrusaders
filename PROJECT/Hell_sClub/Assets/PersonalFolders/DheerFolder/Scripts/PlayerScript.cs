@@ -11,39 +11,56 @@ public class PlayerScript : MonoBehaviour
 
     public Rigidbody PlayerRigibody;
 
-    public float WalkSpeed;
-    public float SprintSpeed;
-    public float MoveMultiplier;
+    private float Speed;
+    public float WalkSpeed=15f;
+    public float SprintSpeed=20f;
+    public float MoveMultiplier=10f;
+    public float RotateSpeed=15f;
     public Vector3 VelocityTracker;
 
-    public float JumpHeight;
-    public float JumpPower;
+    public float JumpHeight=5f;
+    public float JumpPower=5f;
 
-    public float PlayerHealth;
+    public float PlayerHealth=100f;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        Speed = WalkSpeed;
+        PlayerRigibody = GetComponent<Rigidbody>();
         VelocityTracker = PlayerRigibody.velocity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        MovementandRotation();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            Speed = SprintSpeed;
+
+        }
+        else
+        {
+            Speed = WalkSpeed; 
+        }
     }
 
-    public void Movement()
+    public void MovementandRotation()
     {
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
-        if(HorizontalInput !=0 ||  VerticalInput !=0)
-        { 
 
-            PlayerRigibody.velocity = new Vector3(HorizontalInput, 0f, VerticalInput) * WalkSpeed * Time.deltaTime * MoveMultiplier; 
+        Vector3 MovementInput = new Vector3(HorizontalInput, 0f, VerticalInput);
         
+        PlayerRigibody.velocity = (MovementInput * Speed * Time.deltaTime * MoveMultiplier) + new Vector3(0f,PlayerRigibody.velocity.y,0f);
+        if(MovementInput != Vector3.zero)
+        {
+            Quaternion Rotation = Quaternion.LookRotation(MovementInput);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
         }
+        //PlayerRigibody.rotation = Quaternion.Euler(0f, , 0f);
     }
 
 }
