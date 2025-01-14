@@ -98,6 +98,16 @@ public class PlayerScript : MonoBehaviour
         
     }
 
+    public void AdjustSpeed(float multiplier)
+    {
+        Speed = Speed * multiplier;
+    }
+
+    public void ResetSpeed()
+    {
+        Speed = WalkSpeed;
+    }
+
     public void Jump()
     {
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
