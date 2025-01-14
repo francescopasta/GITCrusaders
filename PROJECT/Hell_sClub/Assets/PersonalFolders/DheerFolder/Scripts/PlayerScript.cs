@@ -18,8 +18,12 @@ public class PlayerScript : MonoBehaviour
     public float RotateSpeed=15f;
     public Vector3 VelocityTracker;
 
-    public float JumpHeight=5f;
+    [Header("Jumping Values")]
     public float JumpPower=5f;
+    public bool Grounded = false;
+
+    public float GroundCheckDistance;
+    public float BufferCheckDistance=0.1f;
 
     public float PlayerHealth=100f;
 
@@ -38,6 +42,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Speed = SprintSpeed;
@@ -46,6 +52,19 @@ public class PlayerScript : MonoBehaviour
         else
         {
             Speed = WalkSpeed; 
+        }
+        if (Input.GetKeyDown(KeyCode.Space)&&Grounded)
+        {
+            Jump();
+        }
+        RaycastHit PlayerHit;
+        if(Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
+        {
+            Grounded = true;
+        }
+        else
+        {
+            Grounded = false;
         }
     }
     private void FixedUpdate()
@@ -65,7 +84,7 @@ public class PlayerScript : MonoBehaviour
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
-        //MovementInput = new Vector3(HorizontalInput, 0f, VerticalInput);
+        
 
         MovementInput += ForwardVector + RightVector ;
         
@@ -76,7 +95,25 @@ public class PlayerScript : MonoBehaviour
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
         }
-        //PlayerRigibody.rotation = Quaternion.Euler(0f, , 0f);
+        
     }
+
+    public void Jump()
+    {
+        PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
+    }
+
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Ground"))
+    //    {
+    //        Grounded = true;
+    //    }
+    //}
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    Grounded = false;
+    //}
+
 
 }
