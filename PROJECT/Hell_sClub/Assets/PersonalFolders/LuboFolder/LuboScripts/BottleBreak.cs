@@ -6,6 +6,7 @@ public class BottleBreak : MonoBehaviour
 {
     public GameObject juicePool;
     public int damage = 20;
+    
     // Start is called before the first frame update
     void Start()
     {
