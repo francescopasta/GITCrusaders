@@ -153,11 +153,11 @@ MonoBehaviour:
   MovementInput: {x: 0, y: 0, z: 0}
   WalkSpeed: 9
   SprintSpeed: 10
-  MoveMultiplier: 10.3
+  MoveMultiplier: 11
   RotateSpeed: 15
   VelocityTracker: {x: 0, y: 0, z: 0}
   Grounded: 0
-  JumpPower: 13
+  JumpPower: 20
   BufferCheckDistance: 0.1
   GroundDrag: 8
   AirDrag: 0
