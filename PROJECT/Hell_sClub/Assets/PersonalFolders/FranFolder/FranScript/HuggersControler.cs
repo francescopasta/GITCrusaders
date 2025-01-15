@@ -15,8 +15,10 @@ public class HuggersControler : MonoBehaviour
     void Start()
     {
         // Find the character controller script on the target
-        if (target != null)
+        if (target != null) 
+        {
             characterController = target.GetComponent<PlayerScript>();
+        }
     }
 
     void Update()
