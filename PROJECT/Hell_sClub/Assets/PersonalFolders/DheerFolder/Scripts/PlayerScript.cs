@@ -135,7 +135,12 @@ public class PlayerScript : MonoBehaviour
     {
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
     }
+    public void GravityAdd()
+    {
 
+        PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
+
+    }
     public float CheckNearestGround() 
     {
         RaycastHit hit;
