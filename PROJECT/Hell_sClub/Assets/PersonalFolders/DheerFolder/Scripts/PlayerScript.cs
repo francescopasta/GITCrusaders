@@ -6,8 +6,8 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Player Values")]
 
-    public float HorizontalInput;
-    public float VerticalInput;
+    private float HorizontalInput;
+    private float VerticalInput;
 
     public Rigidbody PlayerRigibody;
 
@@ -21,11 +21,12 @@ public class PlayerScript : MonoBehaviour
     [Header("Jumping Values")]
     public float JumpPower=5f;
     public bool Grounded = false;
+    public float Gravity = 9.8f;
 
-    public float GroundCheckDistance;
+    private float GroundCheckDistance;
     public float BufferCheckDistance=0.1f;
 
-    public float PlayerHealth=100f;
+    public float PlayerHealth = 100f;
 
     [Header("Camera and other References")]
     public Camera MainCam;
@@ -70,6 +71,7 @@ public class PlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         MovementandRotation();
+        GravityAdd();
 
     }
     public void MovementandRotation()
@@ -111,6 +113,13 @@ public class PlayerScript : MonoBehaviour
     public void Jump()
     {
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
+    }
+
+    public void GravityAdd()
+    {
+        
+        PlayerRigibody.AddForce(new Vector3(0.0f,Gravity * -1f, 0.0f), ForceMode.Acceleration);
+        
     }
 
     //public void OnTriggerEnter(Collider other)
