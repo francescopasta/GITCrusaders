@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CameraPlaceholderScript : MonoBehaviour
 {
-    // Amount to change the position and rotation per second
-    public float positionChangeSpeed = 1f;
+    // Player reference
+    public Transform player;
+
+    // Rotation change settings
     public float rotationChangeSpeed = 15f;
+    public float shiftMultiplier = 1.25f;
     public float moveSmoothness = 5f;
     public float rotateSmoothness = 5f;
 
@@ -18,18 +21,36 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Initialize target position and rotation with the current values
         targetPosition = transform.position;
         targetRotation = transform.rotation;
+
+        // Ensure player is assigned
+        if (player == null)
+        {
+            Debug.LogError("Player Transform is not assigned! Please assign it in the Inspector.");
+        }
     }
 
     void Update()
     {
+        if (player == null)
+            return; // Exit if no player is assigned
+
+        // Get the player's current Y position
+        float playerY = player.position.y;
+
+        // Compute the position change speed based on the player's Y position
+        float positionChangeSpeed = Mathf.Abs(playerY) * 0.1f; // Adjust multiplier for scaling
+
+        // Determine if the shift key is held
+        float multiplier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? shiftMultiplier : 1f;
+
         // Update target values if a key is held
         if (Input.GetKey(KeyCode.D))
         {
-            ChangeObjectValues(Time.deltaTime * positionChangeSpeed, -Time.deltaTime * rotationChangeSpeed);
+            ChangeObjectValues(Time.deltaTime * positionChangeSpeed * multiplier, -Time.deltaTime * rotationChangeSpeed * multiplier);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            ChangeObjectValues(-Time.deltaTime * positionChangeSpeed, Time.deltaTime * rotationChangeSpeed);
+            ChangeObjectValues(-Time.deltaTime * positionChangeSpeed * multiplier, Time.deltaTime * rotationChangeSpeed * multiplier);
         }
 
         // Smoothly move towards the target position
