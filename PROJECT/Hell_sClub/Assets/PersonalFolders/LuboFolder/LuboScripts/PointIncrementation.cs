@@ -20,21 +20,25 @@ public class PointIncrementation : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (detection.startPoint == this.transform && detection.movingToStartPoint)
+        if (other.CompareTag("SightLine"))
         {
-            detection.movingToStartPoint = false;
+            if (detection.startPoint == this.transform && detection.movingToStartPoint)
+            {
+                detection.movingToStartPoint = false;
+            }
+            if (detection.endPoint == this.transform)
+            {
+                detection.movingToStartPoint = true;
+            }
+            if (!detection.movingToStartPoint)
+            {
+                detection.i++;
+            }
+            else
+            {
+                detection.i--;
+            }
         }
-        if (detection.endPoint == this.transform)
-        {
-            detection.movingToStartPoint = true;
-        }
-        if (!detection.movingToStartPoint)
-        {
-            detection.i++;
-        }
-        else
-        {
-            detection.i--;  
-        }
+        
     }
 }
