@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CameraPlaceholderScript : MonoBehaviour
 {
-    // Amount to change the position and rotation
-    public float positionChange = 1f;
-    public float rotationChange = 15f;
-    public float moveSpeed = 5f;
-    public float rotateSpeed = 5f;
+    // Amount to change the position and rotation per second
+    public float positionChangeSpeed = 1f;
+    public float rotationChangeSpeed = 15f;
+    public float moveSmoothness = 5f;
+    public float rotateSmoothness = 5f;
 
     private Vector3 targetPosition;
     private Quaternion targetRotation;
@@ -22,23 +22,21 @@ public class CameraPlaceholderScript : MonoBehaviour
 
     void Update()
     {
-        // Check if the D key is pressed
-        if (Input.GetKeyDown(KeyCode.D))
+        // Update target values if a key is held
+        if (Input.GetKey(KeyCode.D))
         {
-            ChangeObjectValues(positionChange, -rotationChange);
+            ChangeObjectValues(Time.deltaTime * positionChangeSpeed, -Time.deltaTime * rotationChangeSpeed);
         }
-
-        // Check if the A key is pressed
-        if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
-            ChangeObjectValues(-positionChange, rotationChange);
+            ChangeObjectValues(-Time.deltaTime * positionChangeSpeed, Time.deltaTime * rotationChangeSpeed);
         }
 
         // Smoothly move towards the target position
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSmoothness);
 
         // Smoothly rotate towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSmoothness);
     }
 
     // Function to update the target position and rotation
