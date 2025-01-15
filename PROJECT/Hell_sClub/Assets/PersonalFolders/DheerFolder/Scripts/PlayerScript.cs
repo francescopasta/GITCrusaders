@@ -83,6 +83,7 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerRigibody.drag = AirDrag;
         }
+        SpeedControl();
     }
     private void FixedUpdate()
     {
@@ -128,7 +129,13 @@ public class PlayerScript : MonoBehaviour
 
     public void SpeedControl()
     {
-        //Lets see this in a minute
+        Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
+
+        if (FlatVelocity.magnitude > Speed)
+        {
+            Vector3 LimitedVel = FlatVelocity.normalized * Speed;
+            PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
+        }
     }
 
     public void Jump()
