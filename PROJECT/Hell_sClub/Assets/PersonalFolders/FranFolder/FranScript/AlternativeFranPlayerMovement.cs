@@ -23,6 +23,7 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     private Vector3 initialCameraPosition; // Store the initial position of the camera
     private float currentShakeDuration = 0f; // Remaining duration of the shake effect
     private float shakeTime = 0f;         // Time tracker for smooth shake oscillation
+    private bool isShaking = false;       // Whether the shake effect is active
 
     void Start()
     {
@@ -34,11 +35,13 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     {
         HandleMouseLook();
         HandleMovement();
-        HandleCameraShake(); // Update the camera shake effect if active
+
         if (Input.GetKeyDown(KeyCode.Space)) // Press Space to trigger the shake
         {
             TriggerCameraShake();
         }
+
+        HandleCameraShake(); // Update the camera shake effect if active
     }
 
     void HandleMouseLook()
@@ -82,29 +85,38 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     {
         currentShakeDuration = shakeDuration; // Reset the shake duration
         shakeTime = 0f; // Reset the oscillation time
+        isShaking = true; // Start the shake effect
     }
 
     void HandleCameraShake()
     {
-        if (currentShakeDuration > 0)
+        if (isShaking)
         {
-            shakeTime += Time.deltaTime * shakeFrequency;
+            if (currentShakeDuration > 0)
+            {
+                shakeTime += Time.deltaTime * shakeFrequency;
 
-            // Create a smooth oscillating shake using Mathf.Sin and Mathf.Cos
-            float xShake = Mathf.Sin(shakeTime) * shakeMagnitude;
-            float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * 0.5f; // Smaller vertical shake
-            float zShake = Mathf.Sin(shakeTime * 0.5f) * shakeMagnitude * 0.3f; // Add some Z axis shake
+                // Create a smooth oscillating shake using Mathf.Sin and Mathf.Cos
+                float xShake = Mathf.Sin(shakeTime) * shakeMagnitude;
+                float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * 0.2f; // Smaller vertical shake
+                float zShake = Mathf.Sin(shakeTime * 0.2f) * shakeMagnitude * 0.5f; // Add some Z axis shake
 
-            // Apply the shake to the camera's local position
-            cameraTransform.localPosition = initialCameraPosition + new Vector3(xShake, yShake, zShake);
+                float rotationShake = Mathf.Sin(shakeTime) * shakeMagnitude * 2f;
 
-            // Reduce shake duration
-            currentShakeDuration -= Time.deltaTime * dampingSpeed;
-        }
-        else if (cameraTransform.localPosition != initialCameraPosition)
-        {
-            // Reset camera position after shake ends
-            cameraTransform.localPosition = initialCameraPosition;
+                // Apply the shake as an offset from the initial camera position
+                cameraTransform.localPosition = initialCameraPosition + new Vector3(xShake, yShake, zShake);
+                cameraTransform.localRotation = Quaternion.Euler(verticalRotation + rotationShake, 0f, 0f);
+
+                // Reduce shake duration
+                currentShakeDuration -= Time.deltaTime * dampingSpeed;
+            }
+            else
+            {
+                // Reset shake effect when duration ends
+                isShaking = false;
+                cameraTransform.localPosition = initialCameraPosition;
+                cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+            }
         }
     }
 }
