@@ -89,7 +89,7 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerRigibody.drag = AirDrag;
         }
-        SpeedControl();
+        
     }
     private void FixedUpdate()
     {
@@ -125,7 +125,17 @@ public class PlayerScript : MonoBehaviour
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
         }
-        
+        ClampVelocity();
+    }
+    private void ClampVelocity()
+    {
+        Vector3 flatVelocity = new Vector3(PlayerRigibody.velocity.x, 0, PlayerRigibody.velocity.z);
+
+        if (flatVelocity.magnitude > Speed)
+        {
+            flatVelocity = flatVelocity.normalized * Speed;
+            PlayerRigibody.velocity = new Vector3(flatVelocity.x, PlayerRigibody.velocity.y, flatVelocity.z);
+        }
     }
 
     public void AdjustSpeed(float multiplier)
