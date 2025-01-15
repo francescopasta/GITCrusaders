@@ -8,24 +8,37 @@ public class PlayerScript : MonoBehaviour
 
     private float HorizontalInput;
     private float VerticalInput;
-
+    [Space(10)]
     public Rigidbody PlayerRigibody;
-
+    public Vector3 MovementInput;
+    [Space(10)]
     private float Speed;
     public float WalkSpeed=15f;
     public float SprintSpeed=20f;
     public float MoveMultiplier=10f;
     public float RotateSpeed=15f;
+    [Space(10)]
     public Vector3 VelocityTracker;
-
+    [Space(5)]
     [Header("Jumping Values")]
-    public float JumpPower=5f;
+    [Space(10)]
     public bool Grounded = false;
+    public float JumpPower=5f;
+    public float BufferCheckDistance = 0.1f;
+    public float GroundDrag;
+    public float AirDrag;
+    [Space(10)]
+    [Header("Slope Handling")]
+    public float MaxSlopeAngle;
+    private RaycastHit SlopeHit;
+    public float SlopeMulti;
+
     public float Gravity = 9.8f;
+    
 
     private float GroundCheckDistance;
-    public float BufferCheckDistance=0.1f;
-
+    
+    [Space(10)]
     public float PlayerHealth = 100f;
 
     [Header("Camera and other References")]
@@ -82,7 +95,7 @@ public class PlayerScript : MonoBehaviour
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
 
-        Vector3 MovementInput = Vector3.zero;
+        MovementInput = Vector3.zero;
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
@@ -90,8 +103,13 @@ public class PlayerScript : MonoBehaviour
 
         MovementInput += ForwardVector + RightVector ;
         
-        PlayerRigibody.velocity = MovementInput + new Vector3(0f, PlayerRigibody.velocity.y, 0f);
-        
+        PlayerRigibody.AddForce( MovementInput , ForceMode.VelocityChange);
+        if (OnSlope())
+        {
+            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
+            Grounded = true;
+        }
+
         if(MovementInput != Vector3.zero)
         {
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
@@ -110,18 +128,59 @@ public class PlayerScript : MonoBehaviour
         Speed = WalkSpeed;
     }
 
+    public void SpeedControl()
+    {
+        Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
+
+        if (FlatVelocity.magnitude > Speed)
+        {
+            Vector3 LimitedVel = FlatVelocity.normalized * Speed;
+            PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
+        }
+    }
+
+    public bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) + 0.3f)) ;
+        {
+            float Angle = Vector3.Angle(Vector3.up, SlopeHit.normal);
+            return Angle < MaxSlopeAngle && Angle!=0;
+            
+        }
+        return false;
+    }
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized; 
+    }
     public void Jump()
     {
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
     }
-
     public void GravityAdd()
     {
-        
-        PlayerRigibody.AddForce(new Vector3(0.0f,Gravity * -1f, 0.0f), ForceMode.Acceleration);
-        
+
+        PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
+
     }
 
+    public float CheckNearestGround() 
+    {
+        RaycastHit hit;
+        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit))
+        {
+            // The ray hit something, and the position of the hit is stored in hit.point
+            Vector3 groundPosition = hit.point;
+            Debug.Log("Ground position: " + groundPosition);
+            return groundPosition.y;
+        }
+        else
+        {
+            return 0f;
+        }
+    }
     //public void OnTriggerEnter(Collider other)
     //{
     //    if (other.CompareTag("Ground"))
