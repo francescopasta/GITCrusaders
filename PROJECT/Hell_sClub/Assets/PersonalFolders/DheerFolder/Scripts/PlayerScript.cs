@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     private float VerticalInput;
     [Space(10)]
     public Rigidbody PlayerRigibody;
+    public Vector3 MovementInput;
     [Space(10)]
     private float Speed;
     public float WalkSpeed=15f;
@@ -27,6 +28,11 @@ public class PlayerScript : MonoBehaviour
     public float GroundDrag;
     public float AirDrag;
     [Space(10)]
+    [Header("Slope Handling")]
+    public float MaxSlopeAngle;
+    private RaycastHit SlopeHit;
+    public float SlopeMulti;
+
     public float Gravity = 9.8f;
     
 
@@ -89,7 +95,7 @@ public class PlayerScript : MonoBehaviour
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
 
-        Vector3 MovementInput = Vector3.zero;
+        MovementInput = Vector3.zero;
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
@@ -98,7 +104,12 @@ public class PlayerScript : MonoBehaviour
         MovementInput += ForwardVector + RightVector ;
         
         PlayerRigibody.AddForce( MovementInput , ForceMode.VelocityChange);
-        
+        if (OnSlope())
+        {
+            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
+            Grounded = true;
+        }
+
         if(MovementInput != Vector3.zero)
         {
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
@@ -119,9 +130,29 @@ public class PlayerScript : MonoBehaviour
 
     public void SpeedControl()
     {
-        //Lets see this in a minute
+        Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
+
+        if (FlatVelocity.magnitude > Speed)
+        {
+            Vector3 LimitedVel = FlatVelocity.normalized * Speed;
+            PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
+        }
     }
 
+    public bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) * 0.3f)) ;
+        {
+            float Angle = Vector3.Angle(Vector3.up, SlopeHit.normal);
+            return Angle < MaxSlopeAngle && Angle!=0;
+            
+        }
+        return false;
+    }
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized; 
+    }
     public void Jump()
     {
         PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
@@ -132,6 +163,7 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
 
     }
+
     public float CheckNearestGround() 
     {
         RaycastHit hit;
