@@ -1,16 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamagePlayerPuddle : MonoBehaviour
 {
-
-    private void OnTriggerEnter(Collider other)
+    public bool dealingDamage = false;
+    public float coolDown = 1f;
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player"))
         {
-            PlayerScript playerHealth = other.GetComponent<PlayerScript>();
-            playerHealth.PlayerHealth--;
+            PlayerScript playerScript = other.GetComponent<PlayerScript>();
+            if (playerScript != null)
+            {
+                if (!dealingDamage)
+                {
+                    StartCoroutine(PoolDamage(playerScript));
+                }
+            }
         }
+    }
+    public IEnumerator PoolDamage(PlayerScript playerScript) 
+    {
+        dealingDamage = true;
+        yield return new WaitForSeconds(coolDown);
+        playerScript.PlayerHealth -= 5;
+        yield return new WaitForSeconds(coolDown);
+        dealingDamage = false;
+
     }
 }
