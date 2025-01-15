@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8956958535952272125}
   - component: {fileID: 3957349260905320863}
   - component: {fileID: 334944698190501222}
+  - component: {fileID: 8650542051478522733}
   m_Layer: 0
   m_Name: DeathVisionLightMegaLaserBeam
-  m_TagString: Untagged
+  m_TagString: SightLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8657987171751476170}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -21.807878, y: 4.7678294, z: 19.5}
-  m_LocalScale: {x: 7.5269933, y: 37.136288, z: 12.961533}
+  m_LocalScale: {x: 3.9001782, y: 48.988434, z: 6.716133}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,3 +108,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &8650542051478522733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657987171751476170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ff9626fcf8cffa4f922ed4005b5eaa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+  speed: 0.3
+  i: 0
+  startPoint: {fileID: 0}
+  endPoint: {fileID: 0}
+  movingToStartPoint: 0
