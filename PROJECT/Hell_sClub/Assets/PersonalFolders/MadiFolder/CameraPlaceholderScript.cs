@@ -34,14 +34,16 @@ public class CameraPlaceholderScript : MonoBehaviour
         if (player == null)
             return; // Exit if no player is assigned
 
-        // Get the player's current Y position
+        // Get the player's current Y and Z position
         float playerY = player.position.y;
+        float playerZ = player.position.z;
 
         // Compute the position change speed based on the player's Y position
         float positionChangeSpeed = Mathf.Abs(playerY) * 0.1f; // Adjust multiplier for scaling
 
-        // Smoothly adjust the Y position of the camera based on the player's Y position
+        // Smoothly adjust the camera's position to follow the player with the Y offset and Z match
         targetPosition.y = Mathf.Lerp(targetPosition.y, playerY + 35f, Time.deltaTime * moveSmoothness);
+        targetPosition.z = Mathf.Lerp(targetPosition.z, playerZ, Time.deltaTime * moveSmoothness);
 
         // Determine if the shift key is held
         float multiplier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? shiftMultiplier : 1f;
