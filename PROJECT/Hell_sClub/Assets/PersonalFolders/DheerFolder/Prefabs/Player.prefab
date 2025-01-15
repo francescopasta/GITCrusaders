@@ -149,17 +149,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8816953073c1b0049868060b97bdc555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HorizontalInput: 0
-  VerticalInput: 0
   PlayerRigibody: {fileID: 1520965729256532456}
-  WalkSpeed: 15
-  SprintSpeed: 20
+  WalkSpeed: 30
+  SprintSpeed: 40
   MoveMultiplier: 10
   RotateSpeed: 15
   VelocityTracker: {x: 0, y: 0, z: 0}
-  JumpPower: 9
+  JumpPower: 13
   Grounded: 0
-  GroundCheckDistance: 0
+  Gravity: 9.8
   BufferCheckDistance: 0.1
   PlayerHealth: 100
   MainCam: {fileID: 0}
