@@ -80,16 +80,6 @@ public class PlayerScript : MonoBehaviour
         {
             Grounded = false;
         }
-        if (Grounded)
-        {
-            PlayerRigibody.drag = GroundDrag;
-
-        }
-        else
-        {
-            PlayerRigibody.drag = AirDrag;
-        }
-        SpeedControl();
     }
     private void FixedUpdate()
     {
