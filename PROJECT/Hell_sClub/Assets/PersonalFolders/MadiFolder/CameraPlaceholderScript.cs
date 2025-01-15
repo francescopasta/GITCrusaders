@@ -40,6 +40,9 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Compute the position change speed based on the player's Y position
         float positionChangeSpeed = Mathf.Abs(playerY) * 0.1f; // Adjust multiplier for scaling
 
+        // Smoothly adjust the Y position of the camera based on the player's Y position
+        targetPosition.y = Mathf.Lerp(targetPosition.y, playerY + 35f, Time.deltaTime * moveSmoothness);
+
         // Determine if the shift key is held
         float multiplier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? shiftMultiplier : 1f;
 
