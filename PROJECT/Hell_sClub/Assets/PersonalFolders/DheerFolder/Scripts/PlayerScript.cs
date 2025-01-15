@@ -151,7 +151,7 @@ public class PlayerScript : MonoBehaviour
 
     public bool OnSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) * 0.3f)) ;
+        if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) + 0.3f)) ;
         {
             float Angle = Vector3.Angle(Vector3.up, SlopeHit.normal);
             return Angle < MaxSlopeAngle && Angle!=0;
