@@ -8,24 +8,31 @@ public class PlayerScript : MonoBehaviour
 
     private float HorizontalInput;
     private float VerticalInput;
-
+    [Space(10)]
     public Rigidbody PlayerRigibody;
-
+    [Space(10)]
     private float Speed;
     public float WalkSpeed=15f;
     public float SprintSpeed=20f;
     public float MoveMultiplier=10f;
     public float RotateSpeed=15f;
+    [Space(10)]
     public Vector3 VelocityTracker;
-
+    [Space(5)]
     [Header("Jumping Values")]
-    public float JumpPower=5f;
+    [Space(10)]
     public bool Grounded = false;
+    public float JumpPower=5f;
+    public float BufferCheckDistance = 0.1f;
+    public float GroundDrag;
+    public float AirDrag;
+    [Space(10)]
     public float Gravity = 9.8f;
+    
 
     private float GroundCheckDistance;
-    public float BufferCheckDistance=0.1f;
-
+    
+    [Space(10)]
     public float PlayerHealth = 100f;
 
     [Header("Camera and other References")]
@@ -67,6 +74,15 @@ public class PlayerScript : MonoBehaviour
         {
             Grounded = false;
         }
+        if (Grounded)
+        {
+            PlayerRigibody.drag = GroundDrag;
+
+        }
+        else
+        {
+            PlayerRigibody.drag = AirDrag;
+        }
     }
     private void FixedUpdate()
     {
@@ -90,7 +106,7 @@ public class PlayerScript : MonoBehaviour
 
         MovementInput += ForwardVector + RightVector ;
         
-        PlayerRigibody.velocity = MovementInput + new Vector3(0f, PlayerRigibody.velocity.y, 0f);
+        PlayerRigibody.AddForce( MovementInput , ForceMode.VelocityChange);
         
         if(MovementInput != Vector3.zero)
         {
@@ -108,6 +124,11 @@ public class PlayerScript : MonoBehaviour
     public void ResetSpeed()
     {
         Speed = WalkSpeed;
+    }
+
+    public void SpeedControl()
+    {
+        //Lets see this in a minute
     }
 
     public void Jump()
