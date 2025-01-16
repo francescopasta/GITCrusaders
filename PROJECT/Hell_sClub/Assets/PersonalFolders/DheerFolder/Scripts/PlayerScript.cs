@@ -35,7 +35,8 @@ public class PlayerScript : MonoBehaviour
     public float SlopeMulti;
 
     public float Gravity = 9.8f;
-    
+
+    public float SlowDown;
 
     private float GroundCheckDistance;
     
@@ -217,8 +218,8 @@ public class PlayerScript : MonoBehaviour
             if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
             {
                 rigidbody = collider.GetComponent<Rigidbody>();
-                //rigidbody.AddExplosionForce(PushForce, rigidbody.transform.position, PushRadius,PushUpModifier , ForceMode.Force);
-                rigidbody.AddForce(new Vector3());
+                rigidbody.AddExplosionForce(PushForce, transform.position, 300f);
+                //rigidbody.AddForce(new Vector3());
             }
             else
             {

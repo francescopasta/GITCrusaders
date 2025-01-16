@@ -8,10 +8,14 @@ public class CameraPlaceholderScript : MonoBehaviour
     public Transform player;
 
     // Rotation change settings
-    public float rotationChangeSpeed = 15f;
-    public float shiftMultiplier = 1.25f;
-    public float moveSmoothness = 5f;
-    public float rotateSmoothness = 5f;
+    public float rotationChangeSpeed = 15f; // Speed of rotation
+    public float shiftMultiplier = 1.25f; // Multiplier when holding shift
+    public float moveSmoothness = 5f; // Smoothness of movement
+    public float rotateSmoothness = 5f; // Smoothness of rotation
+
+    // Adjustable initial rotation offset
+    [Header("Camera Rotation Settings")]
+    public float initialRotationOffset = 45f; // Initial camera rotation offset to the right (in degrees), adjustable in the Inspector
 
     private Vector3 targetPosition;
     private Quaternion targetRotation;
@@ -20,7 +24,10 @@ public class CameraPlaceholderScript : MonoBehaviour
     {
         // Initialize target position and rotation with the current values
         targetPosition = transform.position;
-        targetRotation = transform.rotation;
+
+        // Apply the initial rotation offset of +45 degrees on the Y-axis (adjustable from Inspector)
+        targetRotation = Quaternion.Euler(0, initialRotationOffset, 0);
+        transform.rotation = targetRotation;  // Set the initial rotation right away
 
         // Ensure player is assigned
         if (player == null)
@@ -46,7 +53,7 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Determine if the shift key is held
         float multiplier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? shiftMultiplier : 1f;
 
-        // Update target values if a key is held
+        // Update target values if a key is held (adjust horizontal position and rotation)
         if (Input.GetKey(KeyCode.D))
         {
             ChangeObjectValues(Time.deltaTime * positionChangeSpeed * multiplier, -Time.deltaTime * rotationChangeSpeed * multiplier);
@@ -59,8 +66,8 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Smoothly move towards the target position
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSmoothness);
 
-        // Smoothly rotate towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSmoothness);
+        // Smoothly rotate the camera based on the player's X position (left or right)
+        RotateCameraBasedOnPlayerPosition();
     }
 
     // Function to update the target position and rotation
@@ -69,11 +76,22 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Update the target position
         targetPosition += new Vector3(0, positionDelta, 0);
 
-        // Update the target rotation
+        // Update the target rotation (rotationDelta is the horizontal rotation change)
         targetRotation = Quaternion.Euler(
             targetRotation.eulerAngles.x,
             targetRotation.eulerAngles.y + rotationDelta,
             targetRotation.eulerAngles.z
         );
+    }
+
+    // Function to rotate the camera based on the player's position (left or right)
+    void RotateCameraBasedOnPlayerPosition()
+    {
+        // Calculate the direction the camera should face based on the player's X position relative to the camera
+        float angleToPlayer = Mathf.Atan2(player.position.x - transform.position.x, player.position.z - transform.position.z) * Mathf.Rad2Deg;
+
+        // Smoothly rotate the camera towards the player along the Y axis
+        Quaternion targetRotation = Quaternion.Euler(0, angleToPlayer + initialRotationOffset, 0);  // Add the offset
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSmoothness);
     }
 }

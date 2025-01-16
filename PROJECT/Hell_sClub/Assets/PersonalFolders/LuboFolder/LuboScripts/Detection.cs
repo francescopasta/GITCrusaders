@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Detection : MonoBehaviour
 {
-    
+
     public List<Transform> points = new List<Transform>();
     public float speed = 0.3f;
     public int i = 0;
@@ -18,8 +18,8 @@ public class Detection : MonoBehaviour
     private void FixedUpdate()
     {
         direction = (points[i].position - transform.position).normalized;
-            transform.position += direction * speed;
+        transform.position += direction * speed;
     }
 
-    
+
 }
