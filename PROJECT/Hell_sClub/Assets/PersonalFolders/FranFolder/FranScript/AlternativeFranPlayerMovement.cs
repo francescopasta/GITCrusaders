@@ -25,6 +25,9 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     private float shakeTime = 0f;         // Time tracker for smooth shake oscillation
     private bool isShaking = false;       // Whether the shake effect is active
 
+    public bool isAtBar = false;
+    public GameObject spacebar;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
@@ -36,9 +39,10 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
         HandleMouseLook();
         HandleMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space)) // Press Space to trigger the shake
+        if (Input.GetKeyDown(KeyCode.Space) && isAtBar) // Press Space to trigger the shake
         {
             TriggerCameraShake();
+            spacebar.SetActive(false);
         }
 
         HandleCameraShake(); // Update the camera shake effect if active
