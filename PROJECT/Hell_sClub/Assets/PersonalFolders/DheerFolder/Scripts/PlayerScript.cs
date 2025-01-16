@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -39,7 +40,13 @@ public class PlayerScript : MonoBehaviour
     private float GroundCheckDistance;
     
     [Space(10)]
+    [Header("Abilites/Parameters")]
     public float PlayerHealth = 100f;
+    public bool OiledUp = false;
+    public bool CanPush=true;
+    public float PushForce=300f;
+    public float PushRadius=10f;
+    public float PushUpModifier=1f;
 
     [Header("Camera and other References")]
     public Camera MainCam;
@@ -89,7 +96,10 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerRigibody.drag = AirDrag;
         }
-        
+        if (Input.GetKeyDown(KeyCode.E) && CanPush)
+        {
+            Push();
+        }
     }
     private void FixedUpdate()
     {
@@ -126,15 +136,24 @@ public class PlayerScript : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
         }
         ClampVelocity();
+        if (!OiledUp)
+        {
+           
+            GroundDrag = 8f;
+        }
+        else
+        {
+            GroundDrag = 0f;
+        }
     }
     private void ClampVelocity()
     {
-        Vector3 flatVelocity = new Vector3(PlayerRigibody.velocity.x, 0, PlayerRigibody.velocity.z);
+        Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0, PlayerRigibody.velocity.z);
 
-        if (flatVelocity.magnitude > Speed)
+        if (FlatVelocity.magnitude > Speed)
         {
-            flatVelocity = flatVelocity.normalized * Speed;
-            PlayerRigibody.velocity = new Vector3(flatVelocity.x, PlayerRigibody.velocity.y, flatVelocity.z);
+            FlatVelocity = FlatVelocity.normalized * Speed;
+            PlayerRigibody.velocity = new Vector3(FlatVelocity.x, PlayerRigibody.velocity.y, FlatVelocity.z);
         }
     }
 
@@ -148,16 +167,16 @@ public class PlayerScript : MonoBehaviour
         Speed = WalkSpeed;
     }
 
-    public void SpeedControl()
-    {
-        Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
+    //public void SpeedControl()
+    //{
+    //    Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
 
-        if (FlatVelocity.magnitude > Speed)
-        {
-            Vector3 LimitedVel = FlatVelocity.normalized * Speed;
-            PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
-        }
-    }
+    //    if (FlatVelocity.magnitude > Speed)
+    //    {
+    //        Vector3 LimitedVel = FlatVelocity.normalized * Speed;
+    //        PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
+    //    }
+    //}
 
     public bool OnSlope()
     {
@@ -181,7 +200,31 @@ public class PlayerScript : MonoBehaviour
     {
 
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
+        
+    }
 
+    public void Push()
+    {
+        Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
+        List<Collider> pushedObjectsList = new List<Collider>();
+        foreach (Collider collider in PushedObjects)
+        {
+            pushedObjectsList.Add(collider);
+        }
+        foreach (Collider collider in pushedObjectsList) 
+        {
+            Rigidbody rigidbody;
+            if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
+            {
+                rigidbody = collider.GetComponent<Rigidbody>();
+                rigidbody.AddExplosionForce(PushForce, rigidbody.transform.position, PushRadius,PushUpModifier , ForceMode.Force);
+            }
+            else
+            {
+                continue;
+            }
+        }    
+       
     }
 
     public float CheckNearestGround() 
@@ -201,6 +244,10 @@ public class PlayerScript : MonoBehaviour
             return 0f;
         }
     }
+    //public bool SetSlip(bool Value)
+    //{
+    //    OiledUp = Value;
+    //}
     //public void OnTriggerEnter(Collider other)
     //{
     //    if (other.CompareTag("Ground"))
