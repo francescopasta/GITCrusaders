@@ -8,6 +8,9 @@ public class NPC_FirstScene_Controller : MonoBehaviour
     public GameObject targetTwo;
     public float moveSpeed = 5f;
 
+    public GameObject spacebar;
+    public bool readyToHug = false;
+
     public bool shouldMove = false;
     public bool shouldMoveAgain = false;
 
@@ -29,8 +32,25 @@ public class NPC_FirstScene_Controller : MonoBehaviour
         {
             HugMove();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && readyToHug)
+        {
+            spacebar.SetActive(false);
+            //Trigger ANIMATION
+        }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (!spacebar.activeSelf)
+            {
+                spacebar.SetActive(true);
+            }
+            readyToHug = true;
+        }
+    }
     private void FirstMove()
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
