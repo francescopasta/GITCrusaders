@@ -218,7 +218,7 @@ public class PlayerScript : MonoBehaviour
             if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
             {
                 rigidbody = collider.GetComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(PushForce, rigidbody.transform.position, PushRadius,PushUpModifier , ForceMode.Force);
+                rigidbody.AddExplosionForce(PushForce, transform.position, 300f);
                 //rigidbody.AddForce(new Vector3());
             }
             else
