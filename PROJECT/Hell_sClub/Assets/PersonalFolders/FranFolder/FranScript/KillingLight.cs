@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class KillingLight : MonoBehaviour
 {
-    public GameObject player;
-
+    public GameObject lightCollider; 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+
+        if (other.CompareTag("Cover"))
         {
-            GameObject.Destroy(player);
+            lightCollider.SetActive(false);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Cover"))
+        {
+            lightCollider.SetActive(true);
         }
     }
 }
