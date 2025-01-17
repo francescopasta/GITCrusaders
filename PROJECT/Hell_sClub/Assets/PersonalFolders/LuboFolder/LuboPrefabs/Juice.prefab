@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3795847510702604918}
   - component: {fileID: 9177636228688586995}
   - component: {fileID: 4003622610150095367}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Juice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,3 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dealingDamage: 0
+  coolDown: 1

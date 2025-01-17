@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7932121274116628459}
   - component: {fileID: 208065244037603637}
   - component: {fileID: 8852871563821144703}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: JuiceBottle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
