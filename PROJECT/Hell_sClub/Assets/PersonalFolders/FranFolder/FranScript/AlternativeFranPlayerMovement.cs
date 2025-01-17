@@ -13,9 +13,10 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     public float gravity = -9.81f;        // Gravity applied to the player
 
     public float shakeDuration = 0.5f;     // How long the camera should shake
-    public float shakeMagnitude = 0.2f;   // Magnitude of the shake
-    public float shakeFrequency = 2f;     // Frequency of the shake motion
+    public float shakeMagnitude;   // Magnitude of the shake
+    public float shakeFrequency;     // Frequency of the shake motion
     public float dampingSpeed = 1.0f;     // How quickly the shake dampens
+    public float verticalShake = 0.2f;
 
     private float verticalRotation = 0f;  // Track vertical rotation for clamping
     private Vector3 velocity;             // Velocity for gravity application
@@ -26,12 +27,17 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     private bool isShaking = false;       // Whether the shake effect is active
 
     public bool isAtBar = false;
+    public bool isAtButter = false;
     public GameObject spacebar;
+
+    public List<GameObject> triggersCollider;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
         initialCameraPosition = cameraTransform.localPosition; // Store initial camera position
+        shakeMagnitude = 1f;
+        shakeFrequency = 1.6f;
     }
 
     void Update()
@@ -43,6 +49,21 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
         {
             TriggerCameraShake();
             spacebar.SetActive(false);
+            isAtBar = false;
+            foreach (GameObject obj in triggersCollider)
+            {
+                obj.SetActive(false);
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space) && isAtButter)
+        {
+            spacebar.SetActive(false);
+            shakeFrequency = 150f;
+            shakeMagnitude = 0.2f;
+            verticalShake = 0.2f;
+            TriggerCameraShake();
+            isAtButter=false;
         }
 
         HandleCameraShake(); // Update the camera shake effect if active
@@ -102,8 +123,8 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
 
                 // Create a smooth oscillating shake using Mathf.Sin and Mathf.Cos
                 float xShake = Mathf.Sin(shakeTime) * shakeMagnitude;
-                float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * 0.2f; // Smaller vertical shake
-                float zShake = Mathf.Sin(shakeTime * 0.2f) * shakeMagnitude * 0.5f; // Add some Z axis shake
+                float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * verticalShake; // Smaller vertical shake
+                float zShake = Mathf.Sin(shakeTime * verticalShake) * shakeMagnitude * 0.5f; // Add some Z axis shake
 
                 float rotationShake = Mathf.Sin(shakeTime) * shakeMagnitude * 2f;
 

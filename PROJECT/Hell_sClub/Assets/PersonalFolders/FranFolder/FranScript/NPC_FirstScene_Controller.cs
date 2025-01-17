@@ -47,8 +47,8 @@ public class NPC_FirstScene_Controller : MonoBehaviour
             if (!spacebar.activeSelf)
             {
                 spacebar.SetActive(true);
+                readyToHug = true;
             }
-            readyToHug = true;
         }
     }
     private void FirstMove()
