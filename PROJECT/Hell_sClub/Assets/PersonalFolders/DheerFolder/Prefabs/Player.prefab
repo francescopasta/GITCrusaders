@@ -164,6 +164,7 @@ MonoBehaviour:
   MaxSlopeAngle: 50
   SlopeMulti: 10
   Gravity: 26
+  SlowDown: 0
   PlayerHealth: 100
   OiledUp: 0
   CanPush: 1
@@ -453,6 +454,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9211172893496259118}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: abc7b9707b6a26040b0576805dc656e2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5648483269731989177}
   m_SourcePrefab: {fileID: 100100000, guid: abc7b9707b6a26040b0576805dc656e2, type: 3}
 --- !u!1 &8215301624424116699 stripped
 GameObject:
@@ -487,6 +492,7 @@ MonoBehaviour:
   MaxSlopeAngle: 50
   SlopeMulti: 10
   Gravity: 26
+  SlowDown: 0
   PlayerHealth: 100
   OiledUp: 0
   CanPush: 1
@@ -544,6 +550,22 @@ CapsuleCollider:
   m_Height: 2.0291865
   m_Direction: 1
   m_Center: {x: 0, y: 0.9947671, z: 0}
+--- !u!114 &5648483269731989177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215301624424116699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4647d9613b275264c844d08671afca78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  UIAnimator: {fileID: 0}
+  CrossCount: 0
+  MaxCount: 3
 --- !u!4 &8739602183282846561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: abc7b9707b6a26040b0576805dc656e2,
