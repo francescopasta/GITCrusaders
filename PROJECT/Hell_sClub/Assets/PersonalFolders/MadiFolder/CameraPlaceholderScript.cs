@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class CameraPlaceholderScript : MonoBehaviour
 {
-    // Player reference
     public Transform player;
 
-    // Rotation change settings
-    public float rotationChangeSpeed = 15f; // Speed of rotation
-    public float shiftMultiplier = 1.25f; // Multiplier when holding shift
-    public float moveSmoothness = 5f; // Smoothness of movement
-    public float rotateSmoothness = 5f; // Smoothness of rotation
+    public float rotationChangeSpeed = 15f;
+    public float shiftMultiplier = 1.25f;
+    public float moveSmoothness = 5f;
+    public float rotateSmoothness = 5f;
 
-    // Adjustable initial rotation offset
     [Header("Camera Rotation Settings")]
-    public float initialRotationOffset = 45f; // Initial camera rotation offset to the right (in degrees), adjustable in the Inspector
+    public float initialRotationOffset = 45f;
 
     private Vector3 targetPosition;
     private Quaternion targetRotation;
 
     void Start()
     {
-        // Initialize target position and rotation with the current values
         targetPosition = transform.position;
 
         // Apply the initial rotation offset of +45 degrees on the Y-axis (adjustable from Inspector)
@@ -32,7 +28,7 @@ public class CameraPlaceholderScript : MonoBehaviour
         // Ensure player is assigned
         if (player == null)
         {
-            Debug.LogError("Player Transform is not assigned! Please assign it in the Inspector.");
+            Debug.LogError("Player Transform not assigned");
         }
     }
 
