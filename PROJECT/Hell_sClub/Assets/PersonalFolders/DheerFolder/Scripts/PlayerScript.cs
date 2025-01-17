@@ -232,7 +232,7 @@ public class PlayerScript : MonoBehaviour
     public float CheckNearestGround() 
     {
         RaycastHit hit;
-        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit))
         {
