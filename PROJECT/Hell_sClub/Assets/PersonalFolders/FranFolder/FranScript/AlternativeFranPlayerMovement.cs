@@ -17,6 +17,7 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     public float shakeFrequency;     // Frequency of the shake motion
     public float dampingSpeed = 1.0f;     // How quickly the shake dampens
     public float verticalShake = 0.2f;
+    public float zAxeShake = 0.4f;
 
     private float verticalRotation = 0f;  // Track vertical rotation for clamping
     private Vector3 velocity;             // Velocity for gravity application
@@ -36,8 +37,8 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
         initialCameraPosition = cameraTransform.localPosition; // Store initial camera position
-        shakeMagnitude = 1f;
-        shakeFrequency = 1.6f;
+        shakeMagnitude = 0.8f;
+        shakeFrequency = 1.4f;
     }
 
     void Update()
@@ -124,7 +125,7 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
                 // Create a smooth oscillating shake using Mathf.Sin and Mathf.Cos
                 float xShake = Mathf.Sin(shakeTime) * shakeMagnitude;
                 float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * verticalShake; // Smaller vertical shake
-                float zShake = Mathf.Sin(shakeTime * verticalShake) * shakeMagnitude * 0.5f; // Add some Z axis shake
+                float zShake = Mathf.Sin(shakeTime * zAxeShake) * shakeMagnitude * 0.5f; // Add some Z axis shake
 
                 float rotationShake = Mathf.Sin(shakeTime) * shakeMagnitude * 2f;
 
