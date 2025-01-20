@@ -9,6 +9,7 @@ public class CrossCollectionManager : MonoBehaviour
     public Animator UIAnimator;
     public int CrossCount = 0;
     public int MaxCount = 3;
+    public bool All3 = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,13 @@ public class CrossCollectionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (CrossCount >= MaxCount && !All3)
+        {
+            CrossCount = 3;
+            Debug.Log("All Gotten :0");
+            All3 = true;
+
+        }
+        //UIAnimator.SetFloat("Cross", CrossCount);
     }
 }
