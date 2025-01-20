@@ -59,6 +59,7 @@ public class PlayerScript : MonoBehaviour
     public float deathTImer = 1f;
     public GameObject playerGFX;
     public bool canMove = true;
+    public GameMaster GameMaster;
     // Start is called before the first frame update
     void Awake()
     {
@@ -72,6 +73,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DEBUG FEATURRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TakeDamage(1000);
+        }
         if (canMove)
         {
             GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
@@ -206,11 +212,12 @@ public class PlayerScript : MonoBehaviour
         playerGFX.SetActive(false);
         canMove = false;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeAll;
-        transform.position = playerParentTrans.position;
+        transform.position = GameMaster.lastCheckpointLocation;
         yield return new WaitForSeconds(deathTImer);
         canMove = true;
         PlayerRigibody.constraints = RigidbodyConstraints.None;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        PlayerHealth = 100;
         playerGFX.SetActive(true);
     }
     public bool OnSlope()

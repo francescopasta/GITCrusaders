@@ -5,6 +5,6 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
     [Header("Checkpoints")]
-    public Transform lastCheckpointLocation;
+    public Vector3 lastCheckpointLocation;
 
 }
