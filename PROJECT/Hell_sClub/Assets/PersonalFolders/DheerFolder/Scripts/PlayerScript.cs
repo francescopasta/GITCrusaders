@@ -63,6 +63,9 @@ public class PlayerScript : MonoBehaviour
     public GameObject playerGFX;
     public bool canMove = true;
     public GameMaster GameMaster;
+
+    [Header("huggers")]
+    public HuggingPlayer huggingPlayer;
     // Start is called before the first frame update
     void Awake()
     {
@@ -249,30 +252,35 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
         
     }
-
     public void Push()
     {
         Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
         List<Collider> pushedObjectsList = new List<Collider>();
         foreach (Collider collider in PushedObjects)
         {
-            pushedObjectsList.Add(collider);
+            if (collider.gameObject.CompareTag("Attached Hugger"))
+            {
+                pushedObjectsList.Add(collider);
+            }
         }
-        foreach (Collider collider in pushedObjectsList) 
+        foreach (Collider collider in pushedObjectsList)
         {
             Rigidbody rigidbody;
             if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
             {
                 rigidbody = collider.GetComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(PushForce, transform.position, 300f);
-                //rigidbody.AddForce(new Vector3());
+                rigidbody.constraints = RigidbodyConstraints.None;
+                rigidbody.useGravity = true;
+                rigidbody.mass = 1f;
+                rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
+                StartCoroutine(huggingPlayer.DeactivateEnemies());
             }
             else
             {
                 continue;
             }
-        }    
-       
+        }
+
     }
 
     public float CheckNearestGround() 
