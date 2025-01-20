@@ -50,16 +50,22 @@ public class PlayerScript : MonoBehaviour
     public float PushRadius=10f;
     public float PushUpModifier=1f;
 
+
+
     [Header("Camera and other References")]
     public Camera MainCam;
+    public CooldownPush PushCD;
 
     [Space(10)]
-    [Header("dying")]
+    [Header("Dying")]
     public Transform playerParentTrans;
     public float deathTImer = 1f;
     public GameObject playerGFX;
     public bool canMove = true;
     public GameMaster GameMaster;
+
+    [Header("huggers")]
+    public HuggingPlayer huggingPlayer;
     // Start is called before the first frame update
     void Awake()
     {
@@ -113,9 +119,11 @@ public class PlayerScript : MonoBehaviour
             {
                 PlayerRigibody.drag = AirDrag;
             }
-            if (Input.GetKeyDown(KeyCode.E) && CanPush)
+            if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
             {
                 Push();
+                PushCD.StartCooldown();
+
             }
         }
         
@@ -244,30 +252,35 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
         
     }
-
     public void Push()
     {
         Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
         List<Collider> pushedObjectsList = new List<Collider>();
         foreach (Collider collider in PushedObjects)
         {
-            pushedObjectsList.Add(collider);
+            if (collider.gameObject.CompareTag("Attached Hugger"))
+            {
+                pushedObjectsList.Add(collider);
+            }
         }
-        foreach (Collider collider in pushedObjectsList) 
+        foreach (Collider collider in pushedObjectsList)
         {
             Rigidbody rigidbody;
             if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
             {
                 rigidbody = collider.GetComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(PushForce, transform.position, 300f);
-                //rigidbody.AddForce(new Vector3());
+                rigidbody.constraints = RigidbodyConstraints.None;
+                rigidbody.useGravity = true;
+                rigidbody.mass = 1f;
+                rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
+                StartCoroutine(huggingPlayer.DeactivateEnemies());
             }
             else
             {
                 continue;
             }
-        }    
-       
+        }
+
     }
 
     public float CheckNearestGround() 

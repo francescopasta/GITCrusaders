@@ -9,6 +9,7 @@ TagManager:
   - SightLine
   - PlayerLookAt
   - Hugger
+  - Attached Hugger
   layers:
   - Default
   - TransparentFX
