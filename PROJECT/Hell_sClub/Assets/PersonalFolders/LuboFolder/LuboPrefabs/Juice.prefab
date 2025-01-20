@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dealingDamage: 0
-  coolDown: 1
+  coolDown: 0.33
