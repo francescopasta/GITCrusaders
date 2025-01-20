@@ -12,7 +12,11 @@ public class LightBeamEffect : MonoBehaviour
         {
             if (player != null)
             {
-                Destroy(player);
+                PlayerScript playerScript = player.GetComponent<PlayerScript>();
+                if (playerScript != null)
+                {
+                    playerScript.TakeDamage(playerScript.PlayerHealth);
+                }
             }
         }
     }

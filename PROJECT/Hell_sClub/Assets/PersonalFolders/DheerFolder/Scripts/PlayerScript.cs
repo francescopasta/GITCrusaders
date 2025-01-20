@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float JumpPower=5f;
     public float BufferCheckDistance = 0.1f;
     public float GroundDrag;
+    private float ogGroundDrag;
     public float AirDrag;
     [Space(10)]
     [Header("Slope Handling")]
@@ -52,6 +53,12 @@ public class PlayerScript : MonoBehaviour
     [Header("Camera and other References")]
     public Camera MainCam;
 
+    [Space(10)]
+    [Header("dying")]
+    public Transform playerParentTrans;
+    public float deathTImer = 1f;
+    public GameObject playerGFX;
+    public bool canMove = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -59,54 +66,61 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody = GetComponent<Rigidbody>();
         VelocityTracker = PlayerRigibody.velocity;
         MainCam = Camera.main;
+        ogGroundDrag = GroundDrag;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
+        if (canMove)
+        {
+            GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Speed = SprintSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Speed = SprintSpeed;
 
-        }
-        else
-        {
-            Speed = WalkSpeed; 
-        }
-        if (Input.GetKeyDown(KeyCode.Space)&&Grounded)
-        {
-            Jump();
-        }
-        RaycastHit PlayerHit;
-        if(Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
-        {
-            Grounded = true;
-        }
-        else
-        {
-            Grounded = false;
-        }
-        if (Grounded)
-        {
-            PlayerRigibody.drag = GroundDrag;
+            }
+            else
+            {
+                Speed = WalkSpeed;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && Grounded)
+            {
+                Jump();
+            }
+            RaycastHit PlayerHit;
+            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
+            {
+                Grounded = true;
+            }
+            else
+            {
+                Grounded = false;
+            }
+            if (Grounded)
+            {
+                PlayerRigibody.drag = GroundDrag;
 
+            }
+            else
+            {
+                PlayerRigibody.drag = AirDrag;
+            }
+            if (Input.GetKeyDown(KeyCode.E) && CanPush)
+            {
+                Push();
+            }
         }
-        else
-        {
-            PlayerRigibody.drag = AirDrag;
-        }
-        if (Input.GetKeyDown(KeyCode.E) && CanPush)
-        {
-            Push();
-        }
+        
     }
     private void FixedUpdate()
     {
-        MovementandRotation();
-        GravityAdd();
-
+        if (canMove)
+        {
+            MovementandRotation();
+            GravityAdd();
+        }
     }
     public void MovementandRotation()
     {
@@ -139,12 +153,13 @@ public class PlayerScript : MonoBehaviour
         ClampVelocity();
         if (!OiledUp)
         {
-           
-            GroundDrag = 8f;
+
+            GroundDrag = ogGroundDrag;   
         }
         else
         {
             GroundDrag = 0f;
+
         }
     }
     private void ClampVelocity()
@@ -178,7 +193,26 @@ public class PlayerScript : MonoBehaviour
     //        PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
     //    }
     //}
-
+    public void TakeDamage(float damage) 
+    {
+        PlayerHealth -= damage;
+        if (PlayerHealth<=0)
+        {
+            StartCoroutine(DeathScript());
+        }
+    }
+    public IEnumerator DeathScript() 
+    {
+        playerGFX.SetActive(false);
+        canMove = false;
+        PlayerRigibody.constraints = RigidbodyConstraints.FreezeAll;
+        transform.position = playerParentTrans.position;
+        yield return new WaitForSeconds(deathTImer);
+        canMove = true;
+        PlayerRigibody.constraints = RigidbodyConstraints.None;
+        PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        playerGFX.SetActive(true);
+    }
     public bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) + 0.3f)) ;
