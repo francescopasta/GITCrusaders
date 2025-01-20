@@ -426,7 +426,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: abc7b9707b6a26040b0576805dc656e2,
         type: 3}
       propertyPath: m_Name
-      value: skeleton
+      value: PlayerModel
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: abc7b9707b6a26040b0576805dc656e2,
         type: 3}
@@ -493,7 +493,7 @@ MonoBehaviour:
   SlopeMulti: 10
   Gravity: 26
   SlowDown: 0
-  PlayerHealth: 100
+  PlayerHealth: 220.1
   OiledUp: 0
   CanPush: 1
   PushForce: 300
@@ -566,6 +566,7 @@ MonoBehaviour:
   UIAnimator: {fileID: 0}
   CrossCount: 0
   MaxCount: 3
+  All3: 0
 --- !u!4 &8739602183282846561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: abc7b9707b6a26040b0576805dc656e2,
