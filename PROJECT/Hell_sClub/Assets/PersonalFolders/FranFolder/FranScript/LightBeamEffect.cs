@@ -15,7 +15,7 @@ public class LightBeamEffect : MonoBehaviour
                 PlayerScript playerScript = player.GetComponent<PlayerScript>();
                 if (playerScript != null)
                 {
-                    playerScript.TakeDamage(playerScript.PlayerHealth);
+                    playerScript.TakeDamage(100f);
                 }
             }
         }
