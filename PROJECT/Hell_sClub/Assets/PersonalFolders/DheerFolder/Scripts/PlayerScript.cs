@@ -50,11 +50,14 @@ public class PlayerScript : MonoBehaviour
     public float PushRadius=10f;
     public float PushUpModifier=1f;
 
+
+
     [Header("Camera and other References")]
     public Camera MainCam;
+    public CooldownPush PushCD;
 
     [Space(10)]
-    [Header("dying")]
+    [Header("Dying")]
     public Transform playerParentTrans;
     public float deathTImer = 1f;
     public GameObject playerGFX;
@@ -113,9 +116,11 @@ public class PlayerScript : MonoBehaviour
             {
                 PlayerRigibody.drag = AirDrag;
             }
-            if (Input.GetKeyDown(KeyCode.E) && CanPush)
+            if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
             {
                 Push();
+                PushCD.StartCooldown();
+
             }
         }
         
