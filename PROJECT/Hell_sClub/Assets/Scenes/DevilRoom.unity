@@ -13394,10 +13394,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1227219794}
-  minVerticalAngle: -20
-  maxVerticalAngle: -5
-  minHorizontalAngle: -30
-  maxHorizontalAngle: 30
+  minYposition: -20
+  maxYposition: -5
+  minXposition: -30
+  maxXposition: 30
   rotationSpeed: 100
 --- !u!1001 &988925735
 PrefabInstance:
@@ -22764,6 +22764,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1516287571223531685, guid: 5841f63aaf74b3f4382898c52e27bd56,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1601979501207934386, guid: 5841f63aaf74b3f4382898c52e27bd56,
         type: 3}
       propertyPath: m_Name

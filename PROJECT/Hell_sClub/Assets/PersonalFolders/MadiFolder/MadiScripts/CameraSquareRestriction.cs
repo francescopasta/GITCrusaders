@@ -4,40 +4,42 @@ using UnityEngine;
 
 public class CameraSquareRestriction : MonoBehaviour
 {
-    public Transform player; // Reference to the player (for horizontal rotation)
-    public float minVerticalAngle = -45f; // Minimum vertical angle (pitch)
-    public float maxVerticalAngle = 45f; // Maximum vertical angle (pitch)
-    public float minHorizontalAngle = -90f; // Minimum horizontal angle (yaw, relative to starting position)
-    public float maxHorizontalAngle = 90f; // Maximum horizontal angle (yaw, relative to starting position)
-    public float rotationSpeed = 100f; // Sensitivity for camera rotation
+    public Transform player;
+    [Space(5)]
+    public float minYposition;
+    public float maxYposition;
+    public float minXposition;
+    public float maxXposition;
+    [Space(5)]
+    public float rotationSpeed;
 
-    private float verticalRotation = 0f; // Tracks the vertical rotation angle
-    private float horizontalRotation = 0f; // Tracks the horizontal rotation angle (relative to the initial position)
+    private float verticalRotation = 0f;
+    private float horizontalRotation = 0f;
 
     void Start()
     {
-        // Initialize horizontal rotation based on the player's initial rotation
+        //Horizontal rotation is based on the player's initial rotation
         horizontalRotation = player.eulerAngles.y;
     }
 
     void LateUpdate()
     {
-        // Get mouse input
+        //Mouse input
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        // Calculate horizontal rotation
+        //Calculate horizontal rotation
         horizontalRotation += mouseX;
-        horizontalRotation = Mathf.Clamp(horizontalRotation, minHorizontalAngle, maxHorizontalAngle);
+        horizontalRotation = Mathf.Clamp(horizontalRotation, minXposition, maxXposition);
 
-        // Apply horizontal rotation to the player
+        //Apply horizontal rotation to the player
         player.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
 
-        // Calculate vertical rotation
+        //Calculate vertical rotation
         verticalRotation -= mouseY;
-        verticalRotation = Mathf.Clamp(verticalRotation, minVerticalAngle, maxVerticalAngle);
+        verticalRotation = Mathf.Clamp(verticalRotation, minYposition, maxYposition);
 
-        // Apply vertical rotation to the camera (local rotation)
+        //Apply vertical rotation to the camera (local rotation)
         transform.localEulerAngles = new Vector3(verticalRotation, 0f, 0f);
     }
 }
