@@ -118,3 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03fedf8799dbe409ea3e60f93deff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpDebuff: 10
+  OGJump: 0
