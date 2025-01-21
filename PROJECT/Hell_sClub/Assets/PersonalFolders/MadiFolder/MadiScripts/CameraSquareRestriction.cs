@@ -20,6 +20,8 @@ public class CameraSquareRestriction : MonoBehaviour
     {
         //Horizontal rotation is based on the player's initial rotation
         horizontalRotation = player.eulerAngles.y;
+
+        Cursor.lockState = CursorLockMode.Locked; //Lock the cursor to the center of the screen
     }
 
     void LateUpdate()

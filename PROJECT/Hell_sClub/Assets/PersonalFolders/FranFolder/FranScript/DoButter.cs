@@ -9,7 +9,7 @@ public class DoButter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            cameraShake.spacebar.SetActive(true);
+            cameraShake.SpacebarUI.SetActive(true);
             cameraShake.isAtButter = true;
         }
     }
