@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3172930789060009666}
   - component: {fileID: 1878588916113308387}
-  - component: {fileID: 1699558864741098422}
+  - component: {fileID: 2069826435223924982}
   m_Layer: 0
   m_Name: HuggerArea
   m_TagString: Untagged
@@ -57,7 +57,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.704187, y: 11.654505, z: 26.008009}
   m_Center: {x: -4.3520937, y: 5.3272524, z: 12.5040045}
---- !u!114 &1699558864741098422
+--- !u!114 &2069826435223924982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3232067612213195768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3eee0308e8924641a86221174a660b9, type: 3}
+  m_Script: {fileID: 11500000, guid: a1f33bb726c9e734a93ee9ec005787ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3331693735111319583
@@ -186,8 +186,8 @@ GameObject:
   - component: {fileID: 6817240732099211690}
   - component: {fileID: 2350124936227044238}
   - component: {fileID: 1343124658725624477}
-  - component: {fileID: 481521253366578071}
   - component: {fileID: 6160319212520279535}
+  - component: {fileID: 5031544753873420852}
   m_Layer: 0
   m_Name: Hugger (2)
   m_TagString: Hugger
@@ -282,21 +282,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &481521253366578071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4622916618351090352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed06b43712cc34091581791a455fe3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 3
-  huggedPlayer: 0
 --- !u!54 &6160319212520279535
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -324,6 +309,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5031544753873420852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4622916618351090352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d8c0b5a585d10448a3ad0098fa8196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 5
+  huggedPlayer: 0
 --- !u!1 &7133870012760816875
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,8 +336,8 @@ GameObject:
   - component: {fileID: 8300367589682930417}
   - component: {fileID: 4043278723570555361}
   - component: {fileID: 6608692047351454474}
-  - component: {fileID: 4931974407910011817}
   - component: {fileID: 955669278529351628}
+  - component: {fileID: 677802304205239233}
   m_Layer: 0
   m_Name: Hugger (1)
   m_TagString: Hugger
@@ -432,21 +432,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4931974407910011817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7133870012760816875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed06b43712cc34091581791a455fe3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 3
-  huggedPlayer: 0
 --- !u!54 &955669278529351628
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -474,6 +459,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &677802304205239233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133870012760816875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d8c0b5a585d10448a3ad0098fa8196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 5
+  huggedPlayer: 0
 --- !u!1 &7921707099392298398
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 808486224293848619}
   - component: {fileID: 5789825774900929725}
   - component: {fileID: 1846581884631263441}
-  - component: {fileID: 6802027738358731853}
+  - component: {fileID: 7074218290167431807}
   m_Layer: 0
   m_Name: Hugger
   m_TagString: Hugger
@@ -580,7 +580,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6802027738358731853
+--- !u!114 &7074218290167431807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -589,11 +589,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7921707099392298398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed06b43712cc34091581791a455fe3, type: 3}
+  m_Script: {fileID: 11500000, guid: 59d8c0b5a585d10448a3ad0098fa8196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 3
+  speed: 5
   huggedPlayer: 0
 --- !u!1 &8530065809392779958
 GameObject:

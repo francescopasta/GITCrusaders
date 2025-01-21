@@ -7,17 +7,17 @@ public class CoverCheck : MonoBehaviour
     public GameObject lightCollider; // Reference to the lightCollider object
 
     // List to track colliders currently overlapping
-    private List<Collider> overlappingCovers = new List<Collider>();
+    //private List<Collider> overlappingCovers = new List<Collider>();
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Cover"))
         {
-            // Add the collider to the list if it's not already there
-            if (!overlappingCovers.Contains(other))
-            {
-                overlappingCovers.Add(other);
-            }
+            //// Add the collider to the list if it's not already there
+            //if (!overlappingCovers.Contains(other))
+            //{
+            //    overlappingCovers.Add(other);
+            //}
 
             // Disable lightCollider since we're under cover
             lightCollider.SetActive(false);
@@ -28,14 +28,9 @@ public class CoverCheck : MonoBehaviour
     {
         if (other.CompareTag("Cover"))
         {
-            // Remove the collider from the list
-            overlappingCovers.Remove(other);
-
-            // If there are no more overlapping covers, enable the lightCollider
-            if (overlappingCovers.Count == 0)
-            {
+            
                 lightCollider.SetActive(true);
-            }
+           
         }
     }
 }

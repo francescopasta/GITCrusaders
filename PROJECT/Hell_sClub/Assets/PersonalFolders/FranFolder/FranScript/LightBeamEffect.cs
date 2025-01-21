@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class LightBeamEffect : MonoBehaviour
 {
-    public GameObject player;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (player != null)
+            if (other != null)
             {
-                PlayerScript playerScript = player.GetComponent<PlayerScript>();
+                PlayerScript playerScript = other.GetComponent<PlayerScript>();
                 if (playerScript != null)
                 {
                     playerScript.TakeDamage(100f);
