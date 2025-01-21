@@ -29,6 +29,8 @@ public class PlayerScript : MonoBehaviour
     public float GroundDrag;
     private float ogGroundDrag;
     public float AirDrag;
+    public float onSlopeJump;
+    private float ogJumpForce;
     [Space(10)]
     [Header("Slope Handling")]
     public float MaxSlopeAngle;
@@ -74,6 +76,7 @@ public class PlayerScript : MonoBehaviour
         VelocityTracker = PlayerRigibody.velocity;
         MainCam = Camera.main;
         ogGroundDrag = GroundDrag;
+        ogJumpForce = JumpPower;
     }
 
     // Update is called once per frame
@@ -135,6 +138,16 @@ public class PlayerScript : MonoBehaviour
             MovementandRotation();
             GravityAdd();
         }
+        if (OnSlope()) 
+        {
+            JumpPower = onSlopeJump;
+            
+        }
+        else
+        {
+            JumpPower = ogJumpForce;
+
+        }
     }
     public void MovementandRotation()
     {
@@ -158,7 +171,7 @@ public class PlayerScript : MonoBehaviour
             PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
             Grounded = true;
         }
-
+       
         if(MovementInput != Vector3.zero)
         {
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
@@ -238,13 +251,14 @@ public class PlayerScript : MonoBehaviour
         }
         return false;
     }
+    
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized; 
     }
     public void Jump()
     {
-        PlayerRigibody.AddForce(new Vector3(0f,JumpPower,0f), ForceMode.VelocityChange);
+        PlayerRigibody.velocity = new Vector3(0f,JumpPower,0f);
     }
     public void GravityAdd()
     {
