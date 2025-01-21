@@ -5,29 +5,29 @@ using UnityEngine;
 public class LightSwitcher : MonoBehaviour
 {
     public GameObject lightsFolder;
-    private List<GameObject> lightToOff;
+    public List<GameObject> lightToOff;
     //public List<GameObject> lightsChildren;
     public int lightCount;
-    private GameObject lightToOn;
+    public GameObject lightToOn;
+    public GameObject triggerFolder;
+    public List<GameObject> triggers;
+
+    private bool isEnough = false;
 
     private void Start()
     {
-        for (int i = 0; i < 9; i++)
-        {
-
-            //lightsChildren.Add(lightsFolder.transform.GetChild(i).gameObject);
-
-            if (lightsFolder.transform.GetChild(i).gameObject.activeSelf)
-            {
-                lightToOff.Add(lightsFolder.transform.GetChild(i).gameObject);
-            }
-            else
-            {
-                Debug.Log("No Object Active");
-            }
-        }
 
         lightToOn = lightsFolder.transform.GetChild(lightCount).gameObject;
+        Debug.Log(lightToOn);
+
+        for (int i = 0; i < triggerFolder.transform.childCount; i++)
+        {
+            LightSwitcher script = triggerFolder.transform.GetComponent<LightSwitcher>();
+
+            script.lightCount = i + 1;
+
+            //triggers.Add(triggerFolder.transform.GetChild(i).gameObject);
+        }
 
     }
 
@@ -35,9 +35,30 @@ public class LightSwitcher : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            lightToOff[0].gameObject.SetActive(false);
+            GetLightToOff();
             lightToOn.SetActive(true);
         }
         this.gameObject.SetActive(false);
     }
+
+    private void GetLightToOff()
+    {
+        for (int i = 0; i < lightsFolder.transform.childCount; i++)
+        {
+            GameObject light = lightsFolder.transform.GetChild(i).gameObject;
+
+            if (light.activeSelf && !isEnough)
+            {
+                lightToOff.Add(light);
+                isEnough = true;
+            }
+            else
+            {
+                Debug.Log("No Object Active");
+            }
+
+        }
+        lightToOff[0].gameObject.SetActive(false);
+        lightToOff.RemoveAt(0);
+    } 
 }
