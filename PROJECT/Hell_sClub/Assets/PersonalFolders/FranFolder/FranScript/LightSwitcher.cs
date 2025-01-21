@@ -38,5 +38,6 @@ public class LightSwitcher : MonoBehaviour
             lightToOff[0].gameObject.SetActive(false);
             lightToOn.SetActive(true);
         }
+        this.gameObject.SetActive(false);
     }
 }
