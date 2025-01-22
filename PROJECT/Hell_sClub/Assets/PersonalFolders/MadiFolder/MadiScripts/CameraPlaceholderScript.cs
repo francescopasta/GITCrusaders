@@ -6,11 +6,11 @@ public class CameraPlaceholderScript : MonoBehaviour
 {
     public Transform player;
 
-    private float rotationChangeSpeed = 15f;
-    private float moveSmoothness = 5f;
-    private float rotateSmoothness = 5f;
-    private float initialRotationOffset = -30f;
-    private float heightYoffset = 35f;
+    [SerializeField]private float rotationChangeSpeed = 15f;
+    [SerializeField]private float moveSmoothness = 5f;
+    [SerializeField]private float rotateSmoothness = 5f;
+    [SerializeField]private float initialRotationOffset = -30f;
+    [SerializeField]private float heightYoffset = 35f;
 
     private Vector3 targetPosition;
     private Quaternion targetRotation;
