@@ -137,6 +137,7 @@ public class PlayerScript : MonoBehaviour
         if (canMove)
         {
             MovementandRotation();
+            ClampVelocity();
             GravityAdd();
         }
         if (OnSlope())
@@ -178,7 +179,7 @@ public class PlayerScript : MonoBehaviour
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
         }
-        ClampVelocity();
+        
         if (!OiledUp)
         {
 
