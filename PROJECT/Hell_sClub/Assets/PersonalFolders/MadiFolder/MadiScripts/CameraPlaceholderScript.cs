@@ -9,7 +9,7 @@ public class CameraPlaceholderScript : MonoBehaviour
     private float rotationChangeSpeed = 15f;
     private float moveSmoothness = 5f;
     private float rotateSmoothness = 5f;
-    private float initialRotationOffset = 45f;
+    private float initialRotationOffset = -30f;
     private float heightYoffset = 35f;
 
     private Vector3 targetPosition;
@@ -80,7 +80,7 @@ public class CameraPlaceholderScript : MonoBehaviour
         float angleToPlayer = Mathf.Atan2(player.position.x - transform.position.x, player.position.z - transform.position.z) * Mathf.Rad2Deg;
 
         //Rotate the camera towards the player along the Y axis
-        Quaternion targetRotation = Quaternion.Euler(0, angleToPlayer + initialRotationOffset, 0);  //Add the offset
+        Quaternion targetRotation = Quaternion.Euler(0, angleToPlayer + initialRotationOffset, 0);  // Add the offset
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSmoothness);
     }
 }
