@@ -83,6 +83,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         //DEBUG FEATURRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -90,6 +91,7 @@ public class PlayerScript : MonoBehaviour
         }
         if (canMove)
         {
+            
             GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
 
             if (Input.GetKey(KeyCode.LeftShift))
@@ -137,7 +139,7 @@ public class PlayerScript : MonoBehaviour
         if (canMove)
         {
             MovementandRotation();
-            ClampVelocity();
+            
             GravityAdd();
         }
         if (OnSlope())
@@ -150,6 +152,7 @@ public class PlayerScript : MonoBehaviour
             JumpPower = ogJumpForce;
 
         }
+        ClampVelocity();
     }
     public void MovementandRotation()
     {
