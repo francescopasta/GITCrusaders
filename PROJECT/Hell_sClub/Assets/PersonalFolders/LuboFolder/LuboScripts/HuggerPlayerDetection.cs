@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HuggerPlayerDetection : MonoBehaviour
 {
-    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -24,6 +23,7 @@ public class HuggerPlayerDetection : MonoBehaviour
             {
                 HuggerScript hugger = child.GetComponent<HuggerScript>();
                 hugger.target = null;
+               
             }
         }
     }
