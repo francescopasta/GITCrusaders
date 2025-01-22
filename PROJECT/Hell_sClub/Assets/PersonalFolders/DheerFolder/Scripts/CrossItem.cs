@@ -9,7 +9,8 @@ public class CrossItem : MonoBehaviour
     public float degreesPerSecond = 105.0f;
     public float amplitude = 0.2f;
     public float frequency = 0.3f;
-
+    public ParticleSystem ParticleBurst;
+    public GameObject ObjectToHide;
     // Position Storage Variables
     Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
@@ -32,7 +33,13 @@ public class CrossItem : MonoBehaviour
         tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
 
         transform.position = tempPos;
-
+        if (ParticleBurst.gameObject.activeSelf == true)
+        {
+            if (ParticleBurst.isStopped)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -40,7 +47,9 @@ public class CrossItem : MonoBehaviour
         {
             other.TryGetComponent<CrossCollectionManager>(out CrossCollectionManager Player);
             Player.CrossCount++;
-            Destroy(this.gameObject);
+            ObjectToHide.SetActive(false);
+            ParticleBurst.gameObject.SetActive(true);
+            
         }
     }
 
