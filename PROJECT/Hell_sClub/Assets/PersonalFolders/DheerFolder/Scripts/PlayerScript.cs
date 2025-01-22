@@ -5,6 +5,8 @@ using UnityEngine.TextCore.LowLevel;
 
 public class PlayerScript : MonoBehaviour
 {
+    public Animator animator;
+
     [Header("Player Values")]
 
     private float HorizontalInput;
@@ -78,6 +80,7 @@ public class PlayerScript : MonoBehaviour
         MainCam = Camera.main;
         ogGroundDrag = GroundDrag;
         ogJumpForce = JumpPower;
+        bool isDying = false;
     }
 
     // Update is called once per frame
@@ -91,39 +94,50 @@ public class PlayerScript : MonoBehaviour
         }
         if (canMove)
         {
-            
+
             GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 Speed = SprintSpeed;
-
+                animator.SetBool("isRunning", true);
             }
             else
             {
                 Speed = WalkSpeed;
+                animator.SetBool("isRunning", false);
             }
             if (Input.GetKeyDown(KeyCode.Space) && Grounded)
             {
+                animator.SetBool("isJumping", true);
                 Jump();
             }
             RaycastHit PlayerHit;
             if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
             {
                 Grounded = true;
+                animator.SetBool("isFalling", false);
             }
             else
             {
                 Grounded = false;
+                animator.SetBool("isFalling", true);
             }
             if (Grounded)
             {
                 PlayerRigibody.drag = GroundDrag;
-
+                animator.SetBool("isGrounded", true);
             }
             else
             {
                 PlayerRigibody.drag = AirDrag;
+                animator.SetBool("isGrounded", false);
+                
+                if(PlayerRigibody.velocity.y < 0)
+                {
+                    animator.SetBool("isFalling", true);
+                    animator.SetBool("isJumping", false);
+                }
             }
             if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
             {
@@ -162,6 +176,17 @@ public class PlayerScript : MonoBehaviour
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
 
+        bool isWalking = HorizontalInput != 0 || VerticalInput != 0;
+
+        if (isWalking)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
         MovementInput = Vector3.zero;
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
@@ -175,6 +200,7 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
             Grounded = true;
+            animator.SetBool("isGrounded", true);
         }
 
         if (MovementInput != Vector3.zero)
@@ -230,6 +256,7 @@ public class PlayerScript : MonoBehaviour
         PlayerHealth -= damage;
         if (PlayerHealth <= 0)
         {
+            animator.SetBool("isDying", true);
             StartCoroutine(DeathScript());
         }
     }
@@ -246,6 +273,7 @@ public class PlayerScript : MonoBehaviour
         PlayerHealth = 100;
         huggingPlayer.ResetSpeed();
         playerGFX.SetActive(true);
+        animator.SetBool("isDying", false);
     }
     public bool OnSlope()
     {
