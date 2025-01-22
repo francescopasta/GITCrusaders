@@ -36,10 +36,10 @@ public class CameraPlaceholderScript : MonoBehaviour
 
         float playerY = player.position.y;
 
-        //Compute the position change speed based on the player's Y position
+        //Position change speed based on the player's Y position
         float positionChangeSpeed = Mathf.Abs(playerY) * 0.1f;
 
-        //Smoothly adjust the Y position of the camera based on the player's Y position
+        //Adjust the Y position of the camera based on the player's Y position
         targetPosition.y = Mathf.Lerp(targetPosition.y, playerY + heightYoffset, Time.deltaTime * moveSmoothness);
 
         //Update target values if a key is held
@@ -52,23 +52,23 @@ public class CameraPlaceholderScript : MonoBehaviour
             ChangeObjectValues(-Time.deltaTime * positionChangeSpeed, Time.deltaTime * rotationChangeSpeed);
         }
 
-        //Smoothly move towards the target position
+        //Move towards the target position
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSmoothness);
 
-        //Smoothly rotate the camera based on the player's X position
+        //Rotate the camera based on the player's X position
         RotateCameraBasedOnPlayerPosition();
     }
 
     //Function to update the target position and rotation
-    void ChangeObjectValues(float positionDelta, float rotationDelta)
+    void ChangeObjectValues(float changedPosition, float changedRotation)
     {
         //Update the target position
-        targetPosition += new Vector3(0, positionDelta, 0);
+        targetPosition += new Vector3(0, changedPosition, 0);
 
         //Update the target rotation
         targetRotation = Quaternion.Euler(
             targetRotation.eulerAngles.x,
-            targetRotation.eulerAngles.y + rotationDelta,
+            targetRotation.eulerAngles.y + changedRotation,
             targetRotation.eulerAngles.z
         );
     }
@@ -79,7 +79,7 @@ public class CameraPlaceholderScript : MonoBehaviour
         //Calculate the direction the camera should face based on the player's X position relative to the camera
         float angleToPlayer = Mathf.Atan2(player.position.x - transform.position.x, player.position.z - transform.position.z) * Mathf.Rad2Deg;
 
-        //Smoothly rotate the camera towards the player along the Y axis
+        //Rotate the camera towards the player along the Y axis
         Quaternion targetRotation = Quaternion.Euler(0, angleToPlayer + initialRotationOffset, 0);  //Add the offset
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSmoothness);
     }
