@@ -14,17 +14,17 @@ public class PlayerScript : MonoBehaviour
     public Vector3 MovementInput;
     [Space(10)]
     private float Speed;
-    public float WalkSpeed=15f;
-    public float SprintSpeed=20f;
-    public float MoveMultiplier=10f;
-    public float RotateSpeed=15f;
+    public float WalkSpeed = 15f;
+    public float SprintSpeed = 20f;
+    public float MoveMultiplier = 10f;
+    public float RotateSpeed = 15f;
     [Space(10)]
     public Vector3 VelocityTracker;
     [Space(5)]
     [Header("Jumping Values")]
     [Space(10)]
     public bool Grounded = false;
-    public float JumpPower=5f;
+    public float JumpPower = 5f;
     public float BufferCheckDistance = 0.1f;
     public float GroundDrag;
     private float ogGroundDrag;
@@ -42,15 +42,15 @@ public class PlayerScript : MonoBehaviour
     public float SlowDown;
 
     private float GroundCheckDistance;
-    
+
     [Space(10)]
     [Header("Abilites/Parameters")]
     public float PlayerHealth = 100f;
     public bool OiledUp = false;
-    public bool CanPush=true;
-    public float PushForce=300f;
-    public float PushRadius=10f;
-    public float PushUpModifier=1f;
+    public bool CanPush = true;
+    public float PushForce = 300f;
+    public float PushRadius = 10f;
+    public float PushUpModifier = 1f;
 
 
 
@@ -68,6 +68,7 @@ public class PlayerScript : MonoBehaviour
 
     [Header("huggers")]
     public HuggingPlayer huggingPlayer;
+    public float huggerDeactivationTimer;
     // Start is called before the first frame update
     void Awake()
     {
@@ -129,7 +130,7 @@ public class PlayerScript : MonoBehaviour
 
             }
         }
-        
+
     }
     private void FixedUpdate()
     {
@@ -138,10 +139,10 @@ public class PlayerScript : MonoBehaviour
             MovementandRotation();
             GravityAdd();
         }
-        if (OnSlope()) 
+        if (OnSlope())
         {
             JumpPower = onSlopeJump;
-            
+
         }
         else
         {
@@ -161,18 +162,18 @@ public class PlayerScript : MonoBehaviour
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
-        
 
-        MovementInput += ForwardVector + RightVector ;
-        
-        PlayerRigibody.AddForce( MovementInput , ForceMode.VelocityChange);
+
+        MovementInput += ForwardVector + RightVector;
+
+        PlayerRigibody.AddForce(MovementInput, ForceMode.VelocityChange);
         if (OnSlope())
         {
             PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
             Grounded = true;
         }
-       
-        if(MovementInput != Vector3.zero)
+
+        if (MovementInput != Vector3.zero)
         {
             Quaternion Rotation = Quaternion.LookRotation(MovementInput);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, RotateSpeed);
@@ -181,7 +182,7 @@ public class PlayerScript : MonoBehaviour
         if (!OiledUp)
         {
 
-            GroundDrag = ogGroundDrag;   
+            GroundDrag = ogGroundDrag;
         }
         else
         {
@@ -220,15 +221,15 @@ public class PlayerScript : MonoBehaviour
     //        PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
     //    }
     //}
-    public void TakeDamage(float damage) 
+    public void TakeDamage(float damage)
     {
         PlayerHealth -= damage;
-        if (PlayerHealth<=0)
+        if (PlayerHealth <= 0)
         {
             StartCoroutine(DeathScript());
         }
     }
-    public IEnumerator DeathScript() 
+    public IEnumerator DeathScript()
     {
         playerGFX.SetActive(false);
         canMove = false;
@@ -239,6 +240,7 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.constraints = RigidbodyConstraints.None;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
         PlayerHealth = 100;
+        huggingPlayer.ResetSpeed();
         playerGFX.SetActive(true);
     }
     public bool OnSlope()
@@ -246,19 +248,19 @@ public class PlayerScript : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out SlopeHit, (GetComponent<CapsuleCollider>().height / 2) + 0.3f)) ;
         {
             float Angle = Vector3.Angle(Vector3.up, SlopeHit.normal);
-            return Angle < MaxSlopeAngle && Angle!=0;
-            
+            return Angle < MaxSlopeAngle && Angle != 0;
+
         }
         return false;
     }
-    
+
     private Vector3 GetSlopeMoveDirection()
     {
-        return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized; 
+        return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized;
     }
     public void Jump()
-    {
-        PlayerRigibody.velocity = new Vector3(0f,JumpPower,0f);
+    { 
+        PlayerRigibody.AddForce(new Vector3(0f, JumpPower, 0f), ForceMode.VelocityChange);
     }
     public void GravityAdd()
     {
@@ -287,7 +289,7 @@ public class PlayerScript : MonoBehaviour
                 rigidbody.useGravity = true;
                 rigidbody.mass = 1f;
                 rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
-                StartCoroutine(huggingPlayer.DeactivateEnemies());
+                huggingPlayer.DeactivateEnemies(huggerDeactivationTimer);
             }
             else
             {
