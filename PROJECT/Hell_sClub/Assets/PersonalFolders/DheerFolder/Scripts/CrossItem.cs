@@ -49,7 +49,8 @@ public class CrossItem : MonoBehaviour
             Player.CrossCount++;
             ObjectToHide.SetActive(false);
             ParticleBurst.gameObject.SetActive(true);
-            
+            SphereCollider Collider = GetComponent<SphereCollider>();
+            Collider.enabled = false;
         }
     }
 
