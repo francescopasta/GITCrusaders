@@ -9,8 +9,8 @@ public class LightSwitcher : MonoBehaviour
     //public List<GameObject> lightsChildren;
     public int lightCount;
     public GameObject lightToOn;
-    public GameObject triggerFolder;
-    public List<GameObject> triggers;
+    //public GameObject triggerFolder;
+    //public List<GameObject> triggers;
 
     private bool isEnough = false;
 
@@ -20,14 +20,14 @@ public class LightSwitcher : MonoBehaviour
         lightToOn = lightsFolder.transform.GetChild(lightCount).gameObject;
         Debug.Log(lightToOn);
 
-        for (int i = 0; i < triggerFolder.transform.childCount; i++)
-        {
-            LightSwitcher script = triggerFolder.transform.GetComponent<LightSwitcher>();
+        //for (int i = 0; i < triggerFolder.transform.childCount; i++)
+        //{
+        //    LightSwitcher script = triggerFolder.transform.GetComponent<LightSwitcher>();
 
-            script.lightCount = i + 1;
+        //    script.lightCount = i + 1;
 
-            //triggers.Add(triggerFolder.transform.GetChild(i).gameObject);
-        }
+        //    //triggers.Add(triggerFolder.transform.GetChild(i).gameObject);
+        //}
 
     }
 
@@ -37,8 +37,8 @@ public class LightSwitcher : MonoBehaviour
         {
             GetLightToOff();
             lightToOn.SetActive(true);
+            this.gameObject.SetActive(false);
         }
-        this.gameObject.SetActive(false);
     }
 
     private void GetLightToOff()
