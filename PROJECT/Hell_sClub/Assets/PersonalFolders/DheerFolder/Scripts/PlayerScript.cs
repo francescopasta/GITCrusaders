@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     public float AirDrag;
     public float onSlopeJump;
     private float ogJumpForce;
+    [SerializeField] private bool jumpOnSlope = false; 
     [Space(10)]
     [Header("Slope Handling")]
     public float MaxSlopeAngle;
@@ -40,7 +41,7 @@ public class PlayerScript : MonoBehaviour
     public float SlopeMulti;
 
     public float Gravity = 9.8f;
-
+    public float originalGravity;
     public float SlowDown;
 
     private float GroundCheckDistance;
@@ -81,6 +82,7 @@ public class PlayerScript : MonoBehaviour
         ogGroundDrag = GroundDrag;
         ogJumpForce = JumpPower;
         bool isDying = false;
+        originalGravity = Gravity;
     }
 
     // Update is called once per frame
@@ -113,9 +115,10 @@ public class PlayerScript : MonoBehaviour
                 Jump();
             }
             RaycastHit PlayerHit;
-            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
+            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance) && !OnSlope())
             {
                 Grounded = true;
+                jumpOnSlope = false;
                 animator.SetBool("isFalling", false);
             }
             else
@@ -188,6 +191,44 @@ public class PlayerScript : MonoBehaviour
         }
 
         MovementInput = Vector3.zero;
+        if (OnSlope() && isWalking)
+        {
+            PlayerRigibody.constraints = RigidbodyConstraints.None;
+            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+            if (!jumpOnSlope)
+            {
+                if (PlayerRigibody.velocity.y > 0) 
+                {
+                    PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
+                    PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
+                }
+                else
+                {
+                    PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed, ForceMode.VelocityChange);
+                    PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
+                }
+                if (PlayerRigibody.velocity.magnitude > Speed)
+                {
+                    PlayerRigibody.velocity = PlayerRigibody.velocity.normalized * Speed;
+                }
+                Grounded = true;
+                animator.SetBool("isGrounded", true);
+            }
+        }
+        else if (OnSlope() && !isWalking)
+        {
+            PlayerRigibody.velocity = Vector3.zero;
+            Grounded = true;
+            PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionX;
+            PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionZ;
+            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+            animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            PlayerRigibody.constraints = RigidbodyConstraints.None;
+            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
@@ -196,12 +237,7 @@ public class PlayerScript : MonoBehaviour
         MovementInput += ForwardVector + RightVector;
 
         PlayerRigibody.AddForce(MovementInput, ForceMode.VelocityChange);
-        if (OnSlope())
-        {
-            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
-            Grounded = true;
-            animator.SetBool("isGrounded", true);
-        }
+       
 
         if (MovementInput != Vector3.zero)
         {
@@ -283,7 +319,6 @@ public class PlayerScript : MonoBehaviour
             return Angle < MaxSlopeAngle && Angle != 0;
 
         }
-        return false;
     }
 
     private Vector3 GetSlopeMoveDirection()
@@ -291,8 +326,13 @@ public class PlayerScript : MonoBehaviour
         return Vector3.ProjectOnPlane(MovementInput, SlopeHit.normal).normalized;
     }
     public void Jump()
-    { 
-        PlayerRigibody.AddForce(new Vector3(0f, JumpPower, 0f), ForceMode.VelocityChange);
+    {
+        if (OnSlope()) 
+        {
+            jumpOnSlope = true;
+            Gravity = originalGravity;
+        }
+        PlayerRigibody.velocity = new Vector3(0f, JumpPower, 0f);
     }
     public void GravityAdd()
     {
