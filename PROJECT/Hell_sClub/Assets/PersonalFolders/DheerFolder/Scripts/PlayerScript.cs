@@ -73,6 +73,7 @@ public class PlayerScript : MonoBehaviour
     public HuggingPlayer huggingPlayer;
     public float huggerDeactivationTimer;
     // Start is called before the first frame update
+    public GroundCHeck GroundCHeck;
     void Awake()
     {
         Speed = WalkSpeed;
@@ -115,7 +116,7 @@ public class PlayerScript : MonoBehaviour
                 Jump();
             }
             RaycastHit PlayerHit;
-            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance) && !OnSlope())
+            if (GroundCHeck.grounded)
             {
                 Grounded = true;
                 jumpOnSlope = false;
@@ -150,25 +151,35 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+        Debug.DrawLine(transform.position, transform.position + PlayerRigibody.velocity, Color.red);
+
     }
     private void FixedUpdate()
     {
+        if (!OnSlope())
+        {
+            Gravity = originalGravity;
+        }
+        else
+        {
+            Gravity = 0;
+        }
         if (canMove)
         {
             MovementandRotation();
             
             GravityAdd();
         }
-        if (OnSlope())
-        {
-            JumpPower = onSlopeJump;
+        //if (OnSlope())
+        //{
+        //    JumpPower = onSlopeJump;
 
-        }
-        else
-        {
-            JumpPower = ogJumpForce;
+        //}
+        //else
+        //{
+        //    JumpPower = ogJumpForce;
 
-        }
+        //}
         ClampVelocity();
     }
     public void MovementandRotation()
@@ -191,44 +202,49 @@ public class PlayerScript : MonoBehaviour
         }
 
         MovementInput = Vector3.zero;
-        if (OnSlope() && isWalking)
-        {
-            PlayerRigibody.constraints = RigidbodyConstraints.None;
-            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-            if (!jumpOnSlope)
-            {
-                if (PlayerRigibody.velocity.y > 0) 
-                {
-                    PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
-                    PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
-                }
-                else
-                {
-                    PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed, ForceMode.VelocityChange);
-                    PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
-                }
-                if (PlayerRigibody.velocity.magnitude > Speed)
-                {
-                    PlayerRigibody.velocity = PlayerRigibody.velocity.normalized * Speed;
-                }
-                Grounded = true;
-                animator.SetBool("isGrounded", true);
-            }
-        }
-        else if (OnSlope() && !isWalking)
-        {
-            PlayerRigibody.velocity = Vector3.zero;
-            Grounded = true;
-            PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionX;
-            PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionZ;
-            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-            animator.SetBool("isGrounded", true);
-        }
-        else
-        {
-            PlayerRigibody.constraints = RigidbodyConstraints.None;
-            PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
+        //if (OnSlope() && isWalking)
+        //{
+        //    PlayerRigibody.constraints = RigidbodyConstraints.None;
+        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        //    if (!jumpOnSlope)
+        //    {
+        //        if (PlayerRigibody.velocity.y > 0) 
+        //        {
+        //            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
+        //            if (Grounded) 
+        //            {
+        //                PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed, ForceMode.VelocityChange);
+        //            if (Grounded)
+        //            {
+        //                PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
+        //            }
+        //        }
+        //        if (PlayerRigibody.velocity.magnitude > Speed)
+        //        {
+        //            PlayerRigibody.velocity = PlayerRigibody.velocity.normalized * Speed;
+        //        }
+        //        Grounded = true;
+        //        animator.SetBool("isGrounded", true);
+        //    }
+        //}
+        //else if (OnSlope() && !isWalking)
+        //{
+        //    Grounded = true;
+        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionX;
+        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionY;
+        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        //    animator.SetBool("isGrounded", true);
+        //}
+        //else
+        //{
+        //    PlayerRigibody.constraints = RigidbodyConstraints.None;
+        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
+        //}
 
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
@@ -327,12 +343,13 @@ public class PlayerScript : MonoBehaviour
     }
     public void Jump()
     {
-        if (OnSlope()) 
-        {
-            jumpOnSlope = true;
-            Gravity = originalGravity;
-        }
-        PlayerRigibody.velocity = new Vector3(0f, JumpPower, 0f);
+        //if (OnSlope()) 
+        //{
+        //    jumpOnSlope = true;
+        //    Gravity = originalGravity;
+        //}
+        
+        PlayerRigibody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
     }
     public void GravityAdd()
     {
