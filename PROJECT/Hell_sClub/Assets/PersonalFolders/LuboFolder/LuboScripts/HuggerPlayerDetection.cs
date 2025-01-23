@@ -10,7 +10,7 @@ public class HuggerPlayerDetection : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                HuggerScript hugger = child.GetComponent<HuggerScript>();
+                HuggerScriptWorking hugger = child.GetComponent<HuggerScriptWorking>();
                 hugger.target = other.transform;
             }
         }
@@ -21,7 +21,7 @@ public class HuggerPlayerDetection : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                HuggerScript hugger = child.GetComponent<HuggerScript>();
+                HuggerScriptWorking hugger = child.GetComponent<HuggerScriptWorking>();
                 hugger.target = null;
                
             }
