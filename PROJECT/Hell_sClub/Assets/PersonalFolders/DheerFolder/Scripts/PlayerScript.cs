@@ -101,18 +101,21 @@ public class PlayerScript : MonoBehaviour
 
             GroundCheckDistance = (GetComponent<CapsuleCollider>().height / 2) + BufferCheckDistance;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift)&&isWalking)
             {
                 Speed = SprintSpeed;
-                if (isWalking)
-                {
+                
+                
                     animator.SetBool("isRunning", true);
-                }
+                
             }
             else
             {
                 Speed = WalkSpeed;
-                animator.SetBool("isRunning", false);
+                
+                 
+                    animator.SetBool("isRunning", false); 
+                
             }
             if (Input.GetKeyDown(KeyCode.Space) && Grounded)
             {
