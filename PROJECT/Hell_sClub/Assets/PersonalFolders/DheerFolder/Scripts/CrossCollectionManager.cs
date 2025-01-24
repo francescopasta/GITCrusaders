@@ -10,6 +10,7 @@ public class CrossCollectionManager : MonoBehaviour
     public int CrossCount = 0;
     public int MaxCount = 3;
     public bool All3 = false;
+    public GameObject finalCross;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,7 @@ public class CrossCollectionManager : MonoBehaviour
             CrossCount = 3;
             Debug.Log("All Gotten :0");
             All3 = true;
-
+            finalCross.SetActive(true);
         }
         //UIAnimator.SetFloat("Cross", CrossCount);
     }
