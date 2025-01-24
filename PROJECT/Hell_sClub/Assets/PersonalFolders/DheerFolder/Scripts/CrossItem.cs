@@ -11,6 +11,7 @@ public class CrossItem : MonoBehaviour
     public float frequency = 0.3f;
     public ParticleSystem ParticleBurst;
     public GameObject ObjectToHide;
+    public bool turnAround;
     // Position Storage Variables
     Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
@@ -26,7 +27,10 @@ public class CrossItem : MonoBehaviour
     void Update()
     {
         // Spin object around Y-Axis
-        transform.Rotate(new Vector3(0f, Time.deltaTime * degreesPerSecond, 0f), Space.World);
+        if (turnAround) 
+        {
+            transform.Rotate(new Vector3(0f, Time.deltaTime * degreesPerSecond, 0f), Space.World);
+        }
 
         // Float up/down with a Sin()
         tempPos = posOffset;

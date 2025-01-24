@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/FranScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/BarScene_Francesco.unity
+    guid: 860248c8d14745a41aad7e47ef3a5ecf
+  - enabled: 1
+    path: Assets/Scenes/DevilRoom.unity
+    guid: bf97d0d4ad8c7fc4986e5befa3613ad2
+  - enabled: 1
+    path: Assets/Scenes/ChapelScene_Madi_Fran.unity
+    guid: f353f0b723a1f5b458888a5133e95dd7
   m_configObjects: {}
