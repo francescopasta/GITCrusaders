@@ -16,6 +16,7 @@ public class CooldownPush : MonoBehaviour
     public void StartCooldown() 
     {
         NextTime = Time.time + CooldownTime; 
+
         
     }
     void FixedUpdate()

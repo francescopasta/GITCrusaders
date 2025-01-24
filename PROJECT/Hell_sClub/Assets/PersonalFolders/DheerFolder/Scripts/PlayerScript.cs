@@ -145,9 +145,9 @@ public class PlayerScript : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
             {
+                animator.SetTrigger("isUsingPush");
                 Push();
                 PushCD.StartCooldown();
-
             }
         }
 
