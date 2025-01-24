@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 4314895992524628609}
   - component: {fileID: 79140633450906002}
   - component: {fileID: 1678298202936393936}
+  - component: {fileID: 7224937958637285991}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -267,6 +268,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7224937958637285991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3559280880996092369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b930e0619257944093a784904115624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: DevilRoom
 --- !u!1 &8698377725774630581
 GameObject:
   m_ObjectHideFlags: 0
