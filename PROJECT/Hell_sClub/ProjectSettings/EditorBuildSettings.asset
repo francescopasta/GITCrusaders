@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DevilRoom.unity
     guid: bf97d0d4ad8c7fc4986e5befa3613ad2
+  - enabled: 1
+    path: Assets/Scenes/ChapelScene_Madi_Fran.unity
+    guid: f353f0b723a1f5b458888a5133e95dd7
   m_configObjects: {}
