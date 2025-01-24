@@ -120,7 +120,7 @@ public class PlayerScript : MonoBehaviour
                 Jump();
             }
             RaycastHit PlayerHit;
-            if (GroundCHeck.grounded)
+            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
             {
                 Grounded = true;
                 jumpOnSlope = false;
@@ -174,16 +174,16 @@ public class PlayerScript : MonoBehaviour
             
             GravityAdd();
         }
-        //if (OnSlope())
-        //{
-        //    JumpPower = onSlopeJump;
+        if (OnSlope())
+        {
+            JumpPower = onSlopeJump;
 
-        //}
-        //else
-        //{
-        //    JumpPower = ogJumpForce;
+        }
+        else
+        {
+            JumpPower = ogJumpForce;
 
-        //}
+        }
         ClampVelocity();
     }
     public void MovementandRotation()
@@ -352,8 +352,8 @@ public class PlayerScript : MonoBehaviour
         //    jumpOnSlope = true;
         //    Gravity = originalGravity;
         //}
-        
-        PlayerRigibody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+
+        PlayerRigibody.velocity = new Vector3(PlayerRigibody.velocity.x, JumpPower, PlayerRigibody.velocity.z);
     }
     public void GravityAdd()
     {
