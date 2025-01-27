@@ -151,12 +151,12 @@ public class PlayerScript : MonoBehaviour
                     animator.SetBool("isJumping", false);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
-            {
-                animator.SetTrigger("isUsingPush");
-                Push();
-                PushCD.StartCooldown();
-            }
+            //if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
+            //{
+            //    animator.SetTrigger("isUsingPush");
+            //    //Push();
+            //    PushCD.StartCooldown();
+            //}
         }
 
         Debug.DrawLine(transform.position, transform.position + PlayerRigibody.velocity, Color.red);
@@ -325,13 +325,7 @@ public class PlayerScript : MonoBehaviour
         playerGFX.SetActive(false);
         canMove = false;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeAll;
-        foreach (var item in huggingPlayer.huggerList)
-        {
-            if (item.activeSelf)
-            {
-                item.SetActive(false);
-            }
-        }
+        huggingPlayer.DeactivateEnemies(0);
         transform.position = GameMaster.lastCheckpointLocation;
         yield return new WaitForSeconds(deathTImer);
         canMove = true;
@@ -381,36 +375,35 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
         
     }
-    public void Push()
-    {
-        Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
-        List<Collider> pushedObjectsList = new List<Collider>();
-        foreach (Collider collider in PushedObjects)
-        {
-            if (collider.gameObject.CompareTag("Attached Hugger"))
-            {
-                pushedObjectsList.Add(collider);
-            }
-        }
-        foreach (Collider collider in pushedObjectsList)
-        {
-            Rigidbody rigidbody;
-            if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
-            {
-                rigidbody = collider.GetComponent<Rigidbody>();
-                rigidbody.constraints = RigidbodyConstraints.None;
-                rigidbody.useGravity = true;
-                rigidbody.mass = 1f;
-                rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
-                huggingPlayer.DeactivateEnemies(huggerDeactivationTimer);
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-    }
+    //public void Push()
+    //{
+    //    Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
+    //    List<Collider> pushedObjectsList = new List<Collider>();
+    //    foreach (Collider collider in PushedObjects)
+    //    {
+    //        if (collider.gameObject.CompareTag("Attached Hugger"))
+    //        {
+    //            pushedObjectsList.Add(collider);
+    //        }
+    //    }
+    //    foreach (Collider collider in pushedObjectsList)
+    //    {
+    //        Rigidbody rigidbody;
+    //        if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
+    //        {
+    //            rigidbody = collider.GetComponent<Rigidbody>();
+    //            rigidbody.constraints = RigidbodyConstraints.None;
+    //            rigidbody.useGravity = true;
+    //            rigidbody.mass = 1f;
+    //            rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
+                
+    //        }
+    //        else
+    //        {
+    //            continue;
+    //        }
+    //    }
+    //}
 
     public float CheckNearestGround() 
     {
