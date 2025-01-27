@@ -34,7 +34,10 @@ public class PlayerScript : MonoBehaviour
     public float AirDrag;
     public float onSlopeJump;
     private float ogJumpForce;
-    [SerializeField] private bool jumpOnSlope = false; 
+    [SerializeField] private bool jumpOnSlope = false;
+    public float groundCheckRadius = 0.5f;
+    public LayerMask groundLayer;
+
     [Space(10)]
     [Header("Slope Handling")]
     public float MaxSlopeAngle;
@@ -55,7 +58,7 @@ public class PlayerScript : MonoBehaviour
     public float PushForce = 300f;
     public float PushRadius = 10f;
     public float PushUpModifier = 1f;
-
+    public pushMechanic pushMechanic;
 
 
     [Header("Camera and other References")]
@@ -124,7 +127,7 @@ public class PlayerScript : MonoBehaviour
                 Jump();
             }
             RaycastHit PlayerHit;
-            if (Physics.Raycast(transform.position, -transform.up, out PlayerHit, GroundCheckDistance))
+            if (GroundCheck())
             {
                 Grounded = true;
                 jumpOnSlope = false;
@@ -343,6 +346,9 @@ public class PlayerScript : MonoBehaviour
             }
             disabledEnemies.Clear();
         }
+        pushMechanic.currentMashTimer = 0;
+        pushMechanic.buttonMashRequirement = 0;
+        pushMechanic.pushing = false;
 
     }
     public bool OnSlope()
@@ -437,6 +443,13 @@ public class PlayerScript : MonoBehaviour
     //{
     //    Grounded = false;
     //}
-
+    public bool GroundCheck() 
+    {
+        return Physics.CheckSphere(transform.position, groundCheckRadius, groundLayer);
+    }
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, groundCheckRadius);
+    }
 
 }

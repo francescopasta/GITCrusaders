@@ -31,5 +31,10 @@ public class HuggerScriptWorking : MonoBehaviour
     {
         transform.position = parentLocation.position;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+    }
+    private void OnEnable()
+    {
+        rb.constraints = RigidbodyConstraints.None;
     }
 }
