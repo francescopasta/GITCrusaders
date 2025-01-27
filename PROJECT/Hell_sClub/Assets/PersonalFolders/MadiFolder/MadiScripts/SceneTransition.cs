@@ -11,4 +11,9 @@ public class SceneTransition : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    public void OnQuit()
+    {
+        Application.Quit();
+        Debug.Log("Quit :(");
+    }
 }

@@ -7,20 +7,37 @@ using UnityEngine;
 public class HuggingPlayer : MonoBehaviour
 {
     public PlayerScript playerScript;
+    public pushMechanic pushMechanic;
     //huggers
     public List<GameObject> huggerList;
     public List<GameObject> huggerParents;
+    public int attachedHuggers = 0;
+    //slowDownAndDestroy
     private float totalSlowDown = 1;
     public float slowDownToAdd = 0.33f;
     public float dyingTimer = 2f;
     public float deactivationTimer = 1f;
+    public float timer = 0f;
+    //ogValues
     public float ogMovementWalking;
     public float ogMovementRunning;
-    public float timer = 0f;
+    
+    //Damage
+    [SerializeField]private float totalDamage;
+    public float damageToAdd;
+    public float damageTickTimer;
+    [SerializeField] private bool damagingPlayer;
     private void Start()
     {
         ogMovementWalking = playerScript.WalkSpeed; 
         ogMovementRunning = playerScript.SprintSpeed;
+    }
+    public void FixedUpdate()
+    {
+        if (!damagingPlayer && attachedHuggers > 0)
+        {
+            StartCoroutine(DamagePlayer());
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -30,7 +47,6 @@ public class HuggingPlayer : MonoBehaviour
             if (!huggerList[0].activeSelf)
             {
                 huggerList[0].SetActive(true);
-                
                 collision.gameObject.SetActive(false);
                 Rigidbody rb = huggerList[0].gameObject.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -39,6 +55,9 @@ public class HuggingPlayer : MonoBehaviour
                 rb.mass = 0;
                 huggerList[0].transform.position = huggerParents[0].transform.position;
                 DecreaseSpeed();
+                attachedHuggers++;
+                pushMechanic.totalMashRequirement += 5;
+                totalDamage += damageToAdd;
             }
             else if (!huggerList[1].activeSelf)
             {
@@ -51,6 +70,9 @@ public class HuggingPlayer : MonoBehaviour
                 rb.mass = 0;
                 huggerList[1].transform.position = huggerParents[1].transform.position;
                 DecreaseSpeed();
+                attachedHuggers++;
+                pushMechanic.totalMashRequirement += 5;
+                totalDamage += damageToAdd;
             }
             else
             {
@@ -63,6 +85,10 @@ public class HuggingPlayer : MonoBehaviour
                 rb.mass = 0;
                 huggerList[2].transform.position = huggerParents[2].transform.position;
                 DecreaseSpeed();
+                attachedHuggers++;
+                pushMechanic.totalMashRequirement += 5;
+                totalDamage += damageToAdd;
+
             }
             if (huggerList[0].activeSelf && huggerList[1].activeSelf && huggerList[2].activeSelf)
             {
@@ -93,7 +119,18 @@ public class HuggingPlayer : MonoBehaviour
         {
             item.gameObject.SetActive(false);
         }
+        attachedHuggers = 0;
+        pushMechanic.totalMashRequirement = 0;
+        totalDamage = 0;
+        damagingPlayer = false;
         ResetSpeed();
+    }
+    public IEnumerator DamagePlayer() 
+    {
+        damagingPlayer = true;
+        yield return new WaitForSeconds(damageTickTimer);
+        playerScript.TakeDamage(totalDamage);
+        damagingPlayer =false;
     }
     public IEnumerator HugPlayerToDeath() 
     {
