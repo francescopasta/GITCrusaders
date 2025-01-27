@@ -48,8 +48,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 33.19
-  m_Range: 51.1
-  m_SpotAngle: 14.688332
+  m_Range: 57.74
+  m_SpotAngle: 9.6356
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
@@ -174,27 +174,27 @@ MonoBehaviour:
   hdrpExposureWeight: 0
   blendingMode: 0
   spotAngleFromLight: 1
-  spotAngle: 14.688332
+  spotAngle: 9.6356
   spotAngleMultiplier: 1
-  coneRadiusStart: 2.08
+  coneRadiusStart: 2.22
   shaderAccuracy: 1
   geomMeshType: 0
   geomCustomSides: 18
   geomCustomSegments: 5
   skewingLocalForwardDirection: {x: 0, y: 0, z: 1}
   clippingPlaneTransform: {fileID: 0}
-  geomCap: 0
+  geomCap: 1
   attenuationEquation: 1
   attenuationCustomBlending: 0.5
-  fallOffStart: 28.5
-  fallOffEnd: 51.1
+  fallOffStart: 35.7
+  fallOffEnd: 57.74
   fallOffEndFromLight: 1
   fallOffEndMultiplier: 1
   depthBlendDistance: 2
   cameraClippingDistance: 0.5
-  glareFrontal: 0.624
-  glareBehind: 0.489
-  fresnelPow: 10
+  glareFrontal: 0.268
+  glareBehind: 0.327
+  fresnelPow: 7.27
   noiseMode: 1
   noiseIntensity: 0.5
   noiseScaleUseGlobal: 1
