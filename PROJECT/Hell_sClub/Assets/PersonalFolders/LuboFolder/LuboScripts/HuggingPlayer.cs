@@ -26,10 +26,12 @@ public class HuggingPlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Hugger") && playerScript.Grounded) 
         {
+            playerScript.disabledEnemies.Add(collision.gameObject);
             if (!huggerList[0].activeSelf)
             {
                 huggerList[0].SetActive(true);
-                Destroy(collision.gameObject);
+                
+                collision.gameObject.SetActive(false);
                 Rigidbody rb = huggerList[0].gameObject.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 rb.useGravity = false;
@@ -40,8 +42,8 @@ public class HuggingPlayer : MonoBehaviour
             }
             else if (!huggerList[1].activeSelf)
             {
-                huggerList[1].SetActive(true);
-                Destroy(collision.gameObject);
+                huggerList[1].SetActive(true);;
+                collision.gameObject.SetActive(false);
                 Rigidbody rb = huggerList[1].gameObject.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 rb.useGravity = false;
@@ -53,7 +55,7 @@ public class HuggingPlayer : MonoBehaviour
             else
             {
                 huggerList[2].SetActive(true);
-                Destroy(collision.gameObject);
+                collision.gameObject.SetActive(false);
                 Rigidbody rb = huggerList[2].gameObject.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 rb.useGravity = false;

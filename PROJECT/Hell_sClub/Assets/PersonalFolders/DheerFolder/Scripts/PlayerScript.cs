@@ -73,6 +73,7 @@ public class PlayerScript : MonoBehaviour
     [Header("huggers")]
     public HuggingPlayer huggingPlayer;
     public float huggerDeactivationTimer;
+    public List<GameObject> disabledEnemies; 
     // Start is called before the first frame update
     public GroundCHeck GroundCHeck;
     void Awake()
@@ -324,6 +325,13 @@ public class PlayerScript : MonoBehaviour
         playerGFX.SetActive(false);
         canMove = false;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeAll;
+        foreach (var item in huggingPlayer.huggerList)
+        {
+            if (item.activeSelf)
+            {
+                item.SetActive(false);
+            }
+        }
         transform.position = GameMaster.lastCheckpointLocation;
         yield return new WaitForSeconds(deathTImer);
         canMove = true;
@@ -333,6 +341,15 @@ public class PlayerScript : MonoBehaviour
         huggingPlayer.ResetSpeed();
         playerGFX.SetActive(true);
         animator.SetBool("isDying", false);
+        if (disabledEnemies.Count > 0)
+        {
+            foreach (GameObject item in disabledEnemies)
+            {
+                item.SetActive(true);
+            }
+            disabledEnemies.Clear();
+        }
+
     }
     public bool OnSlope()
     {

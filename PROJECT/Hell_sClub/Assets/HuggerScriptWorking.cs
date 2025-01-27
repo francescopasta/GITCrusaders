@@ -7,6 +7,8 @@ public class HuggerScriptWorking : MonoBehaviour
     public Transform target; // The object to follow and look at
     public float speed = 5f; // Speed of movement
     public bool huggedPlayer;
+    public Transform parentLocation;
+    public Rigidbody rb;
     void Update()
     {
         if (target != null)
@@ -24,5 +26,10 @@ public class HuggerScriptWorking : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
         }
+    }
+    private void OnDisable()
+    {
+        transform.position = parentLocation.position;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 }
