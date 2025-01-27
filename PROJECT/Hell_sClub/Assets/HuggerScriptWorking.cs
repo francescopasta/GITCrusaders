@@ -36,5 +36,7 @@ public class HuggerScriptWorking : MonoBehaviour
     private void OnEnable()
     {
         rb.constraints = RigidbodyConstraints.None;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX;
+        rb.constraints = RigidbodyConstraints.FreezeRotationZ;
     }
 }
