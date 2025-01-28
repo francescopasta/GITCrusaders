@@ -9,7 +9,7 @@ public class CrossItem : MonoBehaviour
         Down,
         Left,
         Right
- }
+    }
 
     public CrossNum Type;
     public Animator UICrossAnimator;
@@ -20,6 +20,7 @@ public class CrossItem : MonoBehaviour
     public ParticleSystem ParticleBurst;
     public GameObject ObjectToHide;
     public bool turnAround;
+    public AudioSource pickupSFX;
     // Position Storage Variables
     Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
@@ -75,6 +76,7 @@ public class CrossItem : MonoBehaviour
             ParticleBurst.gameObject.SetActive(true);
             SphereCollider Collider = GetComponent<SphereCollider>();
             Collider.enabled = false;
+            pickupSFX.Play();
         }
     }
 

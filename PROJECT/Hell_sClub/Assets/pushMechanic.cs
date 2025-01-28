@@ -12,11 +12,18 @@ public class pushMechanic : MonoBehaviour
     public int buttonMashRequirement = 0;
     public int totalMashRequirement;
     public bool pushing;
+    public AudioSource pushAudio;
+    public bool audioPlaying;
+    public AudioSource huggersPushedOffAudio;
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && huggerScript.attachedHuggers > 0)
         {
+            if (buttonMashRequirement % 2 == 0)
+            {
+                pushAudio.Play();
+            }
             buttonMashRequirement++;
             pushing = true;
             playerAnimator.SetTrigger("isUsingPush");
@@ -38,6 +45,7 @@ public class pushMechanic : MonoBehaviour
                     buttonMashRequirement = 0;
                     currentMashTimer = 0;
                     pushing = false;
+                    huggersPushedOffAudio.Play();
                 }
             }
             if (currentMashTimer >= totalMashTimer && buttonMashRequirement < totalMashRequirement)
@@ -48,5 +56,6 @@ public class pushMechanic : MonoBehaviour
             }
         }
     }
+    
 
 }
