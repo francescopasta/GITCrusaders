@@ -6,6 +6,7 @@ public class BottleBreak : MonoBehaviour
 {
     public GameObject juicePool;
     public int damage = 20;
+    public AudioSource audioClip;
     
     // Start is called before the first frame update
     void Start()
@@ -25,17 +26,20 @@ public class BottleBreak : MonoBehaviour
             PlayerScript playerHp = collision.gameObject.GetComponent<PlayerScript>();
             playerHp.PlayerHealth -= damage;
             Instantiate(juicePool,
-                new Vector3(collision.transform.position.x,
-                playerHp.CheckNearestGround(),
-                collision.transform.position.z),
-                Quaternion.identity);
+            new Vector3(collision.transform.position.x,
+            playerHp.CheckNearestGround(),
+            collision.transform.position.z),
+            Quaternion.identity);
             Destroy(gameObject);
+            audioClip.Play();
         }
         else
         {
             Instantiate(juicePool, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            audioClip.Play();
+
         }
-       
+
     }
 }

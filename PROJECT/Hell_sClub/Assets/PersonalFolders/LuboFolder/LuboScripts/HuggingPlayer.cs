@@ -27,6 +27,8 @@ public class HuggingPlayer : MonoBehaviour
     public float damageToAdd;
     public float damageTickTimer;
     [SerializeField] private bool damagingPlayer;
+
+    public AudioSource audioSource;
     private void Start()
     {
         ogMovementWalking = playerScript.WalkSpeed; 
@@ -43,6 +45,7 @@ public class HuggingPlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Hugger") && playerScript.Grounded) 
         {
+            audioSource.Play();
             playerScript.disabledEnemies.Add(collision.gameObject);
             if (!huggerList[0].activeSelf)
             {

@@ -8,6 +8,7 @@ public class ThrowFromPoint : MonoBehaviour
     public float throwForce = 10f; // Strength of the throw
     public bool throwingBottles = false;
     public float throwCooldown = 1f;
+    public AudioSource bottleSFX;
     private void Update()
     {
         if (!throwingBottles)
@@ -27,7 +28,8 @@ public class ThrowFromPoint : MonoBehaviour
         throwingBottles = true;
         // Instantiate the item at this object's position
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
-
+        BottleBreak bottleBreak =  item.GetComponent<BottleBreak>();
+        bottleBreak.audioClip = bottleSFX;
         // Calculate the direction from this object to the throw target
         Vector3 direction = (throwTarget.position - transform.position).normalized;
 
