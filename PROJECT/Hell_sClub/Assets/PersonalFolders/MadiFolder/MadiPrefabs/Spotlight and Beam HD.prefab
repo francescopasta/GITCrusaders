@@ -47,9 +47,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 33.19
-  m_Range: 57.74
-  m_SpotAngle: 9.6356
+  m_Intensity: 36.26
+  m_Range: 71.78
+  m_SpotAngle: 9.077359
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
@@ -168,15 +168,15 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   intensityFromLight: 1
   intensityModeAdvanced: 0
-  intensityInside: 33.19
-  intensityOutside: 33.19
+  intensityInside: 36.26
+  intensityOutside: 36.26
   intensityMultiplier: 1
   hdrpExposureWeight: 0
   blendingMode: 0
   spotAngleFromLight: 1
-  spotAngle: 9.6356
+  spotAngle: 9.077359
   spotAngleMultiplier: 1
-  coneRadiusStart: 2.22
+  coneRadiusStart: 2
   shaderAccuracy: 1
   geomMeshType: 0
   geomCustomSides: 18
@@ -185,18 +185,18 @@ MonoBehaviour:
   clippingPlaneTransform: {fileID: 0}
   geomCap: 1
   attenuationEquation: 1
-  attenuationCustomBlending: 0.5
-  fallOffStart: 35.7
-  fallOffEnd: 57.74
+  attenuationCustomBlending: 1
+  fallOffStart: 0
+  fallOffEnd: 71.78
   fallOffEndFromLight: 1
   fallOffEndMultiplier: 1
   depthBlendDistance: 2
-  cameraClippingDistance: 0.5
-  glareFrontal: 0.268
-  glareBehind: 0.327
-  fresnelPow: 7.27
+  cameraClippingDistance: 0
+  glareFrontal: 0.366
+  glareBehind: 0.461
+  fresnelPow: 1.67
   noiseMode: 1
-  noiseIntensity: 0.5
+  noiseIntensity: 0.337
   noiseScaleUseGlobal: 1
   noiseScaleLocal: 0.5
   noiseVelocityUseGlobal: 1

@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4744415108476531438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5124198402981049076}
+  m_Layer: 0
+  m_Name: Chapel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5124198402981049076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744415108476531438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -129.7, y: 69.93025, z: -179.64}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7227761641576437702}
+  - {fileID: 6367883695747648814}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6905703809724918469
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5124198402981049076}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.21365356
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.761307
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c85ee42fc856dc143a3e50d10da8d937,
+        type: 3}
+      propertyPath: m_Name
+      value: chapel_model_export7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c85ee42fc856dc143a3e50d10da8d937, type: 3}
+--- !u!4 &6367883695747648814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c85ee42fc856dc143a3e50d10da8d937,
+    type: 3}
+  m_PrefabInstance: {fileID: 6905703809724918469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7189033179018620973
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5124198402981049076}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.330002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14.389748
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.020004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 28c6810ba91815b49943bffdb5a68722,
+        type: 3}
+      propertyPath: m_Name
+      value: chapel_ceiling)export2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 28c6810ba91815b49943bffdb5a68722, type: 3}
+--- !u!4 &7227761641576437702 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 28c6810ba91815b49943bffdb5a68722,
+    type: 3}
+  m_PrefabInstance: {fileID: 7189033179018620973}
+  m_PrefabAsset: {fileID: 0}
