@@ -5,14 +5,18 @@ using UnityEngine;
 public class TriggerThrowBottles : MonoBehaviour
 {
     public GameObject throwingObject;
-    public GameObject previousThrowingObject;
+    public List<GameObject> bottleObjects;
     private int count;
     private void OnTriggerEnter(Collider other)
     {
         throwingObject.SetActive(true);
-        if (previousThrowingObject != null)
+        foreach (GameObject bottle in bottleObjects)
         {
-            previousThrowingObject.SetActive(false);
+            if (bottle.activeSelf && bottle != throwingObject)
+            {
+                bottle.SetActive(false);
+            }
         }
+      
     }
 }
