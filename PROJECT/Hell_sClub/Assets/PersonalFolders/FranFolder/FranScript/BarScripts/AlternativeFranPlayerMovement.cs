@@ -44,8 +44,8 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; //Lock the cursor to the center of the screen
-        initialCameraPosition = cameraTransform.localPosition; //Store initial camera position
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
+        initialCameraPosition = cameraTransform.localPosition; // Store initial camera position
     }
 
     void Update()
@@ -53,7 +53,7 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
         HandleMouseLook();
         HandleMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && isAtBar) //Press Space to trigger (weak) shake
+        if (Input.GetKeyDown(KeyCode.Space) && isAtBar) // Press Space to trigger (weak) shake
         {
             TriggerCameraShake();
             SpacebarUI.SetActive(false);
@@ -64,14 +64,14 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && isAtButter) //Press Space to trigger (strong) shake
+        if (Input.GetKeyDown(KeyCode.Space) && isAtButter) // Press Space to trigger (strong) shake
         {
             SpacebarUI.SetActive(false);
             shakeFrequency = 150f;
             shakeMagnitude = 0.2f;
             verticalShake = 0.2f;
             TriggerCameraShake();
-            isAtButter=false;
+            isAtButter = false;
         }
 
         HandleCameraShake();
@@ -82,13 +82,13 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        //Rotate the player horizontally
+        // Rotate the player horizontally
         transform.Rotate(Vector3.up * mouseX);
 
-        //Rotate the camera vertically and clamp it to prevent over-rotation
+        // Rotate the camera vertically and clamp it to prevent over-rotation
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f); // Apply the rotation separately
     }
 
     void HandleMovement()
@@ -99,16 +99,16 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        //Check if Sprint key is held down
+        // Check if Sprint key is held down
         float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
 
-        //Move the character
+        // Move the character
         controller.Move(move * currentSpeed * Time.deltaTime);
 
-        //Apply gravity
+        // Apply gravity
         if (controller.isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; //Reset gravity when grounded
+            velocity.y = -2f; // Reset gravity when grounded
         }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
@@ -116,8 +116,8 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
 
     public void TriggerCameraShake()
     {
-        currentShakeDuration = shakeDuration; //Reset the shake duration
-        shakeTime = 0f; //Reset the cycle time
+        currentShakeDuration = shakeDuration; // Reset the shake duration
+        shakeTime = 0f; // Reset the cycle time
         isShaking = true;
     }
 
@@ -129,26 +129,22 @@ public class AlternativeFranPlayerMovement : MonoBehaviour
             {
                 shakeTime += Time.deltaTime * shakeFrequency;
 
-                //Create a smooth shake
-                float xShake = Mathf.Sin(shakeTime) * shakeMagnitude; //X axis shake
-                float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * verticalShake; //Y axis shake
-                float zShake = Mathf.Sin(shakeTime * shakeDepth) * shakeMagnitude * 0.5f; //Z axis shake
+                // Create a smooth shake
+                float xShake = Mathf.Sin(shakeTime) * shakeMagnitude; // X axis shake
+                float yShake = Mathf.Cos(shakeTime) * shakeMagnitude * verticalShake; // Y axis shake
+                float zShake = Mathf.Sin(shakeTime * shakeDepth) * shakeMagnitude * 0.5f; // Z axis shake
 
-                float rotationShake = Mathf.Sin(shakeTime) * shakeMagnitude * 2f;
-
-                //Apply the shake at an offset from the initial camera position
+                // Apply the shake only on the localPosition, not affecting rotation
                 cameraTransform.localPosition = initialCameraPosition + new Vector3(xShake, yShake, zShake);
-                cameraTransform.localRotation = Quaternion.Euler(verticalRotation + rotationShake, 0f, 0f);
 
-                //Count down shake duration
+                // Count down shake duration
                 currentShakeDuration -= Time.deltaTime * dampingSpeed;
             }
             else
             {
-                //Reset shake effect when duration ends
+                // Reset shake effect when duration ends
                 isShaking = false;
                 cameraTransform.localPosition = initialCameraPosition;
-                cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
             }
         }
     }
