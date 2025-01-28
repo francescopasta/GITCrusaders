@@ -123,7 +123,7 @@ public class PlayerScript : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space) && Grounded)
             {
-                animator.SetBool("isJumping", true);
+                animator.SetTrigger("isJumpingT");
                 animator.SetBool("isGrounded", false);
                 Jump();
             }
@@ -152,7 +152,7 @@ public class PlayerScript : MonoBehaviour
                 if(PlayerRigibody.velocity.y < 0)
                 {
                     animator.SetBool("isFalling", true);
-                    animator.SetBool("isJumping", false);
+                    //animator.SetBool("isJumping", false);
                 }
             }
             //if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
