@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ThrowFromPoint : MonoBehaviour
@@ -5,25 +6,25 @@ public class ThrowFromPoint : MonoBehaviour
     public GameObject itemPrefab;  // Prefab of the item to throw
     public Transform throwTarget; // Point to throw towards
     public float throwForce = 10f; // Strength of the throw
+    public bool throwingBottles = false;
+    public float throwCooldown = 1f;
+    private void Update()
+    {
+        if (!throwingBottles)
+        {
+            StartCoroutine(Throw());
+        }
+    }
 
-    //private void Update()
-    //{
-    //    // Check if the E key is pressed
-    //    if (Input.GetKeyDown(KeyCode.Q))
-    //    {
-    //        Throw();
-    //    }
-    //}
-
-    public void Throw()
+    public IEnumerator Throw()
     {
         // Ensure the prefab and target are set
         if (itemPrefab == null || throwTarget == null)
         {
             Debug.LogWarning("Item prefab or throw target is not set.");
-            return;
+            yield return false;
         }
-
+        throwingBottles = true;
         // Instantiate the item at this object's position
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
 
@@ -40,5 +41,7 @@ public class ThrowFromPoint : MonoBehaviour
         {
             Debug.LogWarning("No Rigidbody found on the item prefab.");
         }
+        yield return new WaitForSeconds(throwCooldown);
+        throwingBottles = false;
     }
 }
