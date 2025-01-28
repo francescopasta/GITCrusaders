@@ -1064,7 +1064,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 6.7833333
+  - time: 6.75
+    functionName: TurnOnObject
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 6.8333335
     functionName: OnAnimationEnd
     data: 
     objectReferenceParameter: {fileID: 0}

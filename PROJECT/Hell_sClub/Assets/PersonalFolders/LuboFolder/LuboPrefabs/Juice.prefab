@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dealingDamage: 0
   coolDown: 0.33
+  destroyTimer: 1.1
