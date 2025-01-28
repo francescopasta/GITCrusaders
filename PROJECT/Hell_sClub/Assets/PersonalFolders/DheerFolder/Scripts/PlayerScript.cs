@@ -124,6 +124,7 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && Grounded)
             {
                 animator.SetBool("isJumping", true);
+                animator.SetBool("isGrounded", false);
                 Jump();
             }
             RaycastHit PlayerHit;
