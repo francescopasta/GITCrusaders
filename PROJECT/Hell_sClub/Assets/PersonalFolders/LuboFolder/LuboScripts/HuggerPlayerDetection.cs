@@ -6,6 +6,7 @@ using UnityEngine;
 public class HuggerPlayerDetection : MonoBehaviour
 {
     public List<GameObject> HuggersInArea;
+    
     private void OnTriggerEnter(Collider other)
     {
         
@@ -17,6 +18,7 @@ public class HuggerPlayerDetection : MonoBehaviour
                 if (hugger != null)
                 {
                     hugger.target = other.transform;
+                    
 
                 }
                 else
@@ -36,7 +38,6 @@ public class HuggerPlayerDetection : MonoBehaviour
                 if (hugger != null)
                 {
                     hugger.target = null;
-
                 }
                 else
                 {

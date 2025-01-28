@@ -9,10 +9,15 @@ public class HuggerScriptWorking : MonoBehaviour
     public bool huggedPlayer;
     public Transform parentLocation;
     public Rigidbody rb;
+    public GameObject huggersGiggling;
     void Update()
     {
         if (target != null)
         {
+            if (!huggersGiggling.activeSelf)
+            {
+                huggersGiggling.SetActive(true);
+            }
             // Get the position of the target
             Vector3 targetPosition = target.position;
 
@@ -32,6 +37,7 @@ public class HuggerScriptWorking : MonoBehaviour
         transform.position = parentLocation.position;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.constraints = RigidbodyConstraints.FreezePosition;
+        huggersGiggling.SetActive(false);
     }
     private void OnEnable()
     {
