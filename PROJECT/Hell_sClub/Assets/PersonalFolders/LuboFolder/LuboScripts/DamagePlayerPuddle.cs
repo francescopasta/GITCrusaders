@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ public class DamagePlayerPuddle : MonoBehaviour
 {
     public bool dealingDamage = false;
     public float coolDown = 1f;
+    public float destroyTimer = 1f;
+    private void Start()
+    {
+            Destroy(gameObject, destroyTimer);
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
