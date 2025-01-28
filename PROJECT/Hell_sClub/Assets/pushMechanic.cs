@@ -6,6 +6,7 @@ public class pushMechanic : MonoBehaviour
 {
     public PlayerScript playerScript;
     public HuggingPlayer huggerScript;
+    public Animator playerAnimator;
     public float totalMashTimer;
     public float currentMashTimer;
     public int buttonMashRequirement = 0;
@@ -18,6 +19,7 @@ public class pushMechanic : MonoBehaviour
         {
             buttonMashRequirement++;
             pushing = true;
+            playerAnimator.SetTrigger("isUsingPush");
         }
 
     }
