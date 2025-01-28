@@ -29,7 +29,7 @@ public class ChangeAnimationHugGirl : MonoBehaviour
     {
         if (targetAnimator != null)
         {
-            targetAnimator.Play(newState); // Play the specified animation
+            targetAnimator.CrossFade(newState, 0.1f); // 0.1f is the transition duration
         }
         else
         {
