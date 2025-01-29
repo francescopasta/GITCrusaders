@@ -9,6 +9,10 @@ public class ThrowFromPoint : MonoBehaviour
     public bool throwingBottles = false;
     public float throwCooldown = 1f;
     public AudioSource bottleSFX;
+    private void OnEnable()
+    {
+        throwingBottles = false;    
+    }
     private void Update()
     {
         if (!throwingBottles)
