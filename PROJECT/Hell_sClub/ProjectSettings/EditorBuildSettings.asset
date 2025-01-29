@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScenes/DevilRoom.unity
     guid: bf97d0d4ad8c7fc4986e5befa3613ad2
   - enabled: 1
-    path: Assets/Scenes/OTHERSCENESFORGOD'SSAKEINFAME/ChapelScene_Madi_Fran - Copy.unity
-    guid: f353f0b723a1f5b458888a5133e95dd7
+    path: Assets/Scenes/MainScenes/ChapelScene_Madi_Fran.unity
+    guid: 296f30e8d59382f408518f36ed42427c
   - enabled: 1
     path: Assets/Scenes/MainScenes/END.unity
     guid: 5fb515234991e4d4f9838f4c5b3803a9
