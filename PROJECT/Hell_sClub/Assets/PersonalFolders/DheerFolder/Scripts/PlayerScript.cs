@@ -6,7 +6,8 @@ using UnityEngine.TextCore.LowLevel;
 public class PlayerScript : MonoBehaviour
 {
     public Animator animator;
-    bool isWalking;
+    public bool isWalking;
+    public bool isRunning;
 
     [Header("Player Values")]
 
@@ -108,17 +109,17 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift)&&isWalking)
             {
                 Speed = SprintSpeed;
-                
-                
+
+                isRunning = true;
                     animator.SetBool("isRunning", true);
                 
             }
             else
             {
                 Speed = WalkSpeed;
-                
-                 
-                    animator.SetBool("isRunning", false); 
+
+                isRunning = false;
+                animator.SetBool("isRunning", false); 
                 
             }
             if (Input.GetKeyDown(KeyCode.Space) && Grounded)
