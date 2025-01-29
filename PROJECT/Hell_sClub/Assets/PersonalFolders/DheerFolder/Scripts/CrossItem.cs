@@ -78,6 +78,7 @@ public class CrossItem : MonoBehaviour
             SphereCollider Collider = GetComponent<SphereCollider>();
             Collider.enabled = false;
             pickupSFX.Play();
+            playerScript.PlayerHealth = 100;
         }
     }
 

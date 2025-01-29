@@ -330,6 +330,7 @@ public class PlayerScript : MonoBehaviour
         canMove = false;
         PlayerRigibody.constraints = RigidbodyConstraints.FreezeAll;
         huggingPlayer.DeactivateEnemies(0);
+        pushMechanic.SetUI(false);
         transform.position = GameMaster.lastCheckpointLocation;
         yield return new WaitForSeconds(deathTImer);
         canMove = true;
@@ -350,6 +351,7 @@ public class PlayerScript : MonoBehaviour
         pushMechanic.currentMashTimer = 0;
         pushMechanic.buttonMashRequirement = 0;
         pushMechanic.pushing = false;
+        
 
     }
     public bool OnSlope()
