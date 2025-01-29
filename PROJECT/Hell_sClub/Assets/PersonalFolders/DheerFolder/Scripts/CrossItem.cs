@@ -21,6 +21,7 @@ public class CrossItem : MonoBehaviour
     public GameObject ObjectToHide;
     public bool turnAround;
     public AudioSource pickupSFX;
+    public PlayerScript playerScript;
     // Position Storage Variables
     Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
