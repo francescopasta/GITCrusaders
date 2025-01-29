@@ -9,7 +9,7 @@ public class GiantSFX : MonoBehaviour
     public float minTime;
     public float maxTime;
     private int randomGrunt;
-    private bool canGrunt;
+    private bool canGrunt = true;
     private void Update()
     {
         if (canGrunt) 
