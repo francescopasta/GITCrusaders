@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChapelScene_Madi_Fran.unity
     guid: f353f0b723a1f5b458888a5133e95dd7
+  - enabled: 1
+    path: Assets/Scenes/END.unity
+    guid: 5fb515234991e4d4f9838f4c5b3803a9
   m_configObjects: {}
