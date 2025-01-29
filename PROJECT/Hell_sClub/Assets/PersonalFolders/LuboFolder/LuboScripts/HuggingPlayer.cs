@@ -93,10 +93,10 @@ public class HuggingPlayer : MonoBehaviour
                 totalDamage += damageToAdd;
 
             }
-            if (huggerList[0].activeSelf && huggerList[1].activeSelf && huggerList[2].activeSelf)
-            {
-                StartCoroutine(HugPlayerToDeath());
-            }
+            //if (huggerList[0].activeSelf && huggerList[1].activeSelf && huggerList[2].activeSelf)
+            //{
+            //    StartCoroutine(HugPlayerToDeath());
+            //}
         }
     }
     public void ResetSpeed()
