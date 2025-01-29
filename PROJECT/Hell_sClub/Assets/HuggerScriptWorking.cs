@@ -10,6 +10,7 @@ public class HuggerScriptWorking : MonoBehaviour
     public Transform parentLocation;
     public Rigidbody rb;
     public GameObject huggersGiggling;
+    public Animator hugAnim;
     void Update()
     {
         if (target != null)
@@ -29,7 +30,11 @@ public class HuggerScriptWorking : MonoBehaviour
 
             // Move the object towards the target
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
+            hugAnim.SetBool("isFollowing", true);
+        }
+        else
+        {
+            hugAnim.SetBool("isFollowing", false);
         }
     }
     private void OnDisable()
@@ -38,6 +43,7 @@ public class HuggerScriptWorking : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.constraints = RigidbodyConstraints.FreezePosition;
         huggersGiggling.SetActive(false);
+        hugAnim.SetBool("isFollowing", false);
     }
     private void OnEnable()
     {
