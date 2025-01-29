@@ -9,5 +9,6 @@ public class CursorUnlcok : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
     }
+}
 
     
