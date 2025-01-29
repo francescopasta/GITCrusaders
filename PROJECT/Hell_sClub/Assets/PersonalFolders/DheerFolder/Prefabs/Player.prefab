@@ -256,7 +256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2754557164944360352
 Transform:
   m_ObjectHideFlags: 0
@@ -842,6 +842,10 @@ MonoBehaviour:
   AirDrag: 0
   onSlopeJump: 20
   jumpOnSlope: 0
+  groundCheckRadius: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   MaxSlopeAngle: 50
   SlopeMulti: 1
   Gravity: 26
@@ -853,6 +857,7 @@ MonoBehaviour:
   PushForce: 500
   PushRadius: 10
   PushUpModifier: 3.85
+  pushMechanic: {fileID: 0}
   MainCam: {fileID: 0}
   PushCD: {fileID: 0}
   playerParentTrans: {fileID: 0}
@@ -862,6 +867,7 @@ MonoBehaviour:
   GameMaster: {fileID: 0}
   huggingPlayer: {fileID: 6142335955518846999}
   huggerDeactivationTimer: 0
+  disabledEnemies: []
   GroundCHeck: {fileID: 4823001486021062005}
 --- !u!54 &6467736390416739461
 Rigidbody:
@@ -930,6 +936,7 @@ MonoBehaviour:
   CrossCount: 0
   MaxCount: 3
   All3: 0
+  finalCross: {fileID: 0}
 --- !u!114 &1134817825856739928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -947,6 +954,7 @@ MonoBehaviour:
   CrossCount: 0
   MaxCount: 3
   All3: 0
+  finalCross: {fileID: 0}
 --- !u!114 &6142335955518846999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1001546091938398879}
+  pushMechanic: {fileID: 0}
   huggerList:
   - {fileID: 3860659888766139063}
   - {fileID: 7165268206550472452}
@@ -968,12 +977,18 @@ MonoBehaviour:
   - {fileID: 4109768081262688037}
   - {fileID: 8293567083412073681}
   - {fileID: 3546661366387425144}
+  attachedHuggers: 0
   slowDownToAdd: 0.33
   dyingTimer: 2
   deactivationTimer: 1
+  timer: 0
   ogMovementWalking: 0
   ogMovementRunning: 0
-  timer: 0
+  totalDamage: 0
+  damageToAdd: 0
+  damageTickTimer: 0
+  damagingPlayer: 0
+  audioSource: {fileID: 0}
 --- !u!114 &6619942578665887509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,17 +1002,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1001546091938398879}
+  pushMechanic: {fileID: 0}
   huggerList: []
   huggerParents:
   - {fileID: 4109768081262688037}
   - {fileID: 8293567083412073681}
   - {fileID: 3546661366387425144}
+  attachedHuggers: 0
   slowDownToAdd: 0.33
   dyingTimer: 2
   deactivationTimer: 1
+  timer: 0
   ogMovementWalking: 0
   ogMovementRunning: 0
-  timer: 0
+  totalDamage: 0
+  damageToAdd: 0
+  damageTickTimer: 0
+  damagingPlayer: 0
+  audioSource: {fileID: 0}
 --- !u!1 &8293567083412073681
 GameObject:
   m_ObjectHideFlags: 0
