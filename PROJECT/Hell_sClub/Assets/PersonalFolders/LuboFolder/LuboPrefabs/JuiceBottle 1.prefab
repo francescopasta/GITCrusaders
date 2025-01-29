@@ -135,6 +135,7 @@ MonoBehaviour:
     type: 3}
   damage: 20
   audioClip: {fileID: 0}
+  rotationAmount: 1
 --- !u!136 &208065244037603637
 CapsuleCollider:
   m_ObjectHideFlags: 0

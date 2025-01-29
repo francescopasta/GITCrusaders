@@ -7,7 +7,7 @@ public class BottleBreak : MonoBehaviour
     public GameObject juicePool;
     public int damage = 20;
     public AudioSource audioClip;
-    
+    public float rotationAmount = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class BottleBreak : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0, 0, rotationAmount * Time.deltaTime);
     }
     private void OnCollisionEnter(Collision collision)
     {
