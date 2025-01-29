@@ -13658,6 +13658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 694566416}
   - component: {fileID: 694566417}
+  - component: {fileID: 694566418}
   m_Layer: 0
   m_Name: TextParent
   m_TagString: Untagged
@@ -13721,6 +13722,48 @@ MonoBehaviour:
   - {fileID: 223832542}
   - {fileID: 1290871092}
   - {fileID: 1759027507}
+--- !u!320 &694566418
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694566415}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 7019191735101177283, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 772326326}
+  - key: {fileID: -4963486157750877167, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 880451996}
+  - key: {fileID: -3472854871043466986, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 173829656}
+  - key: {fileID: 7309271931206898823, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 354572649}
+  - key: {fileID: -1818322239243239296, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1884112041}
+  - key: {fileID: -4982532810940170244, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1988935560}
+  - key: {fileID: -7147429047492818285, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1310143087}
+  - key: {fileID: -5209513864581063340, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1672344429}
+  - key: {fileID: 8640511593086795560, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1480830320}
+  - key: {fileID: -2041321061574369235, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 223832542}
+  - key: {fileID: 5059831331423276969, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1290871092}
+  - key: {fileID: -8012643287297742230, guid: d64b4e024574aa24aabdc67058ad31ae, type: 2}
+    value: {fileID: 1759027507}
+  m_ExposedReferences:
+    m_References:
+    - d9f18203323d4aa4b910d57f27b98b7e: {fileID: 772326326}
 --- !u!1 &732278484
 GameObject:
   m_ObjectHideFlags: 0
@@ -32057,7 +32100,7 @@ GameObject:
   - component: {fileID: 1759027508}
   - component: {fileID: 1759027509}
   m_Layer: 0
-  m_Name: Game:\Load
+  m_Name: GameLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
