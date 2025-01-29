@@ -35,10 +35,11 @@ public class PlayerScript : MonoBehaviour
     public float AirDrag;
     public float onSlopeJump;
     private float ogJumpForce;
+    [SerializeField] private bool falling;
     [SerializeField] private bool jumpOnSlope = false;
     public float groundCheckRadius = 0.5f;
     public LayerMask groundLayer;
-
+    public AudioSource landingSFX;
     [Space(10)]
     [Header("Slope Handling")]
     public float MaxSlopeAngle;
@@ -79,7 +80,6 @@ public class PlayerScript : MonoBehaviour
     public float huggerDeactivationTimer;
     public List<GameObject> disabledEnemies; 
     // Start is called before the first frame update
-    public GroundCHeck GroundCHeck;
     void Awake()
     {
         Speed = WalkSpeed;
@@ -133,11 +133,13 @@ public class PlayerScript : MonoBehaviour
             {
                 Grounded = true;
                 jumpOnSlope = false;
+                
                 animator.SetBool("isFalling", false);
             }
             else
             {
                 Grounded = false;
+                falling = true;
                 animator.SetBool("isFalling", true);
             }
             if (Grounded)
@@ -156,12 +158,12 @@ public class PlayerScript : MonoBehaviour
                     //animator.SetBool("isJumping", false);
                 }
             }
-            //if (Input.GetKeyDown(KeyCode.E) && !PushCD.IsCoolingDown)
-            //{
-            //    animator.SetTrigger("isUsingPush");
-            //    //Push();
-            //    PushCD.StartCooldown();
-            //}
+            if (Grounded && falling)
+            {
+                falling = false;    
+                landingSFX.Play();
+            }
+            
         }
 
         Debug.DrawLine(transform.position, transform.position + PlayerRigibody.velocity, Color.red);
@@ -215,50 +217,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         MovementInput = Vector3.zero;
-        //if (OnSlope() && isWalking)
-        //{
-        //    PlayerRigibody.constraints = RigidbodyConstraints.None;
-        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-        //    if (!jumpOnSlope)
-        //    {
-        //        if (PlayerRigibody.velocity.y > 0) 
-        //        {
-        //            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed * SlopeMulti, ForceMode.Force);
-        //            if (Grounded) 
-        //            {
-        //                PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            PlayerRigibody.AddForce(GetSlopeMoveDirection() * Speed, ForceMode.VelocityChange);
-        //            if (Grounded)
-        //            {
-        //                PlayerRigibody.AddForce(Vector3.down * Speed * SlopeMulti, ForceMode.Force);
-        //            }
-        //        }
-        //        if (PlayerRigibody.velocity.magnitude > Speed)
-        //        {
-        //            PlayerRigibody.velocity = PlayerRigibody.velocity.normalized * Speed;
-        //        }
-        //        Grounded = true;
-        //        animator.SetBool("isGrounded", true);
-        //    }
-        //}
-        //else if (OnSlope() && !isWalking)
-        //{
-        //    Grounded = true;
-        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionX;
-        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezePositionY;
-        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-        //    animator.SetBool("isGrounded", true);
-        //}
-        //else
-        //{
-        //    PlayerRigibody.constraints = RigidbodyConstraints.None;
-        //    PlayerRigibody.constraints = RigidbodyConstraints.FreezeRotation;
-        //}
-
+        
         Vector3 RightVector = Right * (HorizontalInput * Speed * Time.deltaTime * MoveMultiplier);
         Vector3 ForwardVector = Forward * (VerticalInput * Speed * Time.deltaTime * MoveMultiplier);
 
@@ -306,16 +265,7 @@ public class PlayerScript : MonoBehaviour
         Speed = WalkSpeed;
     }
 
-    //public void SpeedControl()
-    //{
-    //    Vector3 FlatVelocity = new Vector3(PlayerRigibody.velocity.x, 0f, PlayerRigibody.velocity.z);
-
-    //    if (FlatVelocity.magnitude > Speed)
-    //    {
-    //        Vector3 LimitedVel = FlatVelocity.normalized * Speed;
-    //        PlayerRigibody.velocity = new Vector3(LimitedVel.x, PlayerRigibody.velocity.y, LimitedVel.z);
-    //    }
-    //}
+   
     public void TakeDamage(float damage)
     {
         PlayerHealth -= damage;
@@ -371,12 +321,7 @@ public class PlayerScript : MonoBehaviour
     }
     public void Jump()
     {
-        //if (OnSlope()) 
-        //{
-        //    jumpOnSlope = true;
-        //    Gravity = originalGravity;
-        //}
-
+        
         PlayerRigibody.velocity = new Vector3(PlayerRigibody.velocity.x, JumpPower, PlayerRigibody.velocity.z);
     }
     public void GravityAdd()
@@ -385,35 +330,7 @@ public class PlayerScript : MonoBehaviour
         PlayerRigibody.AddForce(new Vector3(0.0f, Gravity * -1f, 0.0f), ForceMode.Acceleration);
         
     }
-    //public void Push()
-    //{
-    //    Collider[] PushedObjects = Physics.OverlapSphere(transform.position, PushRadius);
-    //    List<Collider> pushedObjectsList = new List<Collider>();
-    //    foreach (Collider collider in PushedObjects)
-    //    {
-    //        if (collider.gameObject.CompareTag("Attached Hugger"))
-    //        {
-    //            pushedObjectsList.Add(collider);
-    //        }
-    //    }
-    //    foreach (Collider collider in pushedObjectsList)
-    //    {
-    //        Rigidbody rigidbody;
-    //        if (collider.attachedRigidbody != null && !collider.gameObject.CompareTag("Player"))
-    //        {
-    //            rigidbody = collider.GetComponent<Rigidbody>();
-    //            rigidbody.constraints = RigidbodyConstraints.None;
-    //            rigidbody.useGravity = true;
-    //            rigidbody.mass = 1f;
-    //            rigidbody.AddExplosionForce(PushForce, transform.position, PushRadius);
-                
-    //        }
-    //        else
-    //        {
-    //            continue;
-    //        }
-    //    }
-    //}
+    
 
     public float CheckNearestGround() 
     {
@@ -432,21 +349,7 @@ public class PlayerScript : MonoBehaviour
             return 0f;
         }
     }
-    //public bool SetSlip(bool Value)
-    //{
-    //    OiledUp = Value;
-    //}
-    //public void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Ground"))
-    //    {
-    //        Grounded = true;
-    //    }
-    //}
-    //public void OnTriggerExit(Collider other)
-    //{
-    //    Grounded = false;
-    //}
+
     public bool GroundCheck() 
     {
         return Physics.CheckSphere(transform.position, groundCheckRadius, groundLayer);
