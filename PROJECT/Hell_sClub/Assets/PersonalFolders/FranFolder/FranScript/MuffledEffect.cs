@@ -26,9 +26,13 @@ public class MuffledEffect : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       StartCoroutine(ChangeMusic());
+       StartCoroutine(ChangeMusic(targetCutoff));
     }
-    public IEnumerator ChangeMusic() 
+    private void OnTriggerExit(Collider other)
+    {
+        StopCoroutine(ChangeMusic(normalCutoff));
+    }
+    public IEnumerator ChangeMusic(float target) 
     {
         float currentCutoff = lowPassFilter.cutoffFrequency;
         float elapsedTime = 0;
@@ -36,7 +40,7 @@ public class MuffledEffect : MonoBehaviour
         while (elapsedTime < transitionTime)
         {
             elapsedTime += Time.deltaTime;
-            lowPassFilter.cutoffFrequency = Mathf.Lerp(currentCutoff, targetCutoff, elapsedTime / transitionTime);
+            lowPassFilter.cutoffFrequency = Mathf.Lerp(currentCutoff, target, elapsedTime / transitionTime);
             yield return null;
         }
     }
