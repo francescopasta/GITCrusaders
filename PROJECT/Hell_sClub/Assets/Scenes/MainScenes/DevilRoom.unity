@@ -17879,7 +17879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b930e0619257944093a784904115624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: ChapelScene_Madi_Fran
+  sceneName: Chapel_Transition
 --- !u!43 &1065602185
 Mesh:
   m_ObjectHideFlags: 0
