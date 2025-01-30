@@ -5,46 +5,45 @@ using UnityEngine;
 public class LightFlicker : MonoBehaviour
 {
     public Light lightObject;
-    public float first;
-    public float second;
-    public float e_first;
-    public float e_second;
-    private float Timer;
-    private float timerMoment;
+    public float minInterval = 5f; // Minimum time before flicker starts
+    public float maxInterval = 8f; // Maximum time before flicker starts
+    public float flickerDuration = 1f; // How long the flickering lasts
+    public float flickerSpeed = 0.1f; // Speed of flickering
 
-    // Start is called before the first frame update
+    private float nextFlickerTime;
+    private bool isFlickering = false;
+
     void Start()
     {
-        Timer = Random.Range(first, second);
-        timerMoment = Random.Range(e_first, e_second);
+        ScheduleNextFlicker();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (timerMoment > 0)
+        if (!isFlickering && Time.time >= nextFlickerTime)
         {
-            timerMoment -= Time.deltaTime;
-        }
-
-        if (timerMoment <= 0)
-        {
-            FlickerEffect();
-            timerMoment = Random.Range(e_first, e_second);
+            StartCoroutine(FlickerEffect());
         }
     }
 
-    private void FlickerEffect()
+    private IEnumerator FlickerEffect()
     {
-        if (Timer > 0)
-        {
-            Timer -= Time.deltaTime;
-        }
+        isFlickering = true;
+        float flickerEndTime = Time.time + flickerDuration;
 
-        if (Timer <= 0)
+        while (Time.time < flickerEndTime)
         {
             lightObject.enabled = !lightObject.enabled;
-            Timer = Random.Range(first, second);
+            yield return new WaitForSeconds(flickerSpeed);
         }
+
+        lightObject.enabled = true; // Ensure light stays on after flicker
+        isFlickering = false;
+        ScheduleNextFlicker();
+    }
+
+    private void ScheduleNextFlicker()
+    {
+        nextFlickerTime = Time.time + Random.Range(minInterval, maxInterval);
     }
 }
