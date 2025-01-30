@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlaySoundEffect : StateMachineBehaviour
 {
-    public AudioSource fallingSFX;
+    public AudioSource SFX;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        fallingSFX.Play();
+        SFX.Play();
     }
 
 }
